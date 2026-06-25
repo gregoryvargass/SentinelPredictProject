@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import UserMenu from "../components/UserMenu";
+import Logo from "../components/Logo";
 
-export default function MainLayout({ children }) {
+export default function MainLayout({ children, onLogoutSuccess }) {
   const [showHeader, setShowHeader] = useState(true);
   const lastScrollY = useRef(0);
   const location = useLocation();
@@ -53,11 +54,14 @@ export default function MainLayout({ children }) {
         }`}
       >
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-4 xl:flex-row xl:items-center xl:justify-between">
-          <div>
-            <h1 className="text-xl font-bold text-white">SentinelPredict</h1>
-            <p className="text-sm text-slate-400">
-              Gestión y análisis de incidentes industriales
-            </p>
+
+          <div className="flex items-center gap-4">
+            <Logo variant="brand" size="md" />
+            <div>
+              <p className="text-sm text-slate-400">
+                Gestión y análisis de incidentes industriales
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
@@ -101,7 +105,7 @@ export default function MainLayout({ children }) {
               )}
             </nav>
 
-            <UserMenu />
+            <UserMenu onLogoutSuccess={onLogoutSuccess} />
           </div>
         </div>
       </header>

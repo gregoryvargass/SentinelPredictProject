@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import DashboardPage from "./pages/DashboardPage";
 import ReportsPage from "./pages/ReportsPage";
@@ -11,6 +17,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ImportReportsPage from "./pages/ImportReportsPage";
 import LandingPage from "./pages/LandingPage";
 import ToastContainer from "./components/ToastContainer";
+import { isMvpAuthenticated } from "./utils/auth";
 
 const defaultReportsFilters = {
   searchTerm: "",
@@ -20,6 +27,24 @@ const defaultReportsFilters = {
   startDateFilter: "",
   endDateFilter: "",
 };
+
+function ProtectedRoute({ children }) {
+  const location = useLocation();
+
+  if (!isMvpAuthenticated()) {
+    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  }
+
+  return children;
+}
+
+function PublicOnlyRoute({ children }) {
+  if (isMvpAuthenticated()) {
+    return <Navigate to="/app" replace />;
+  }
+
+  return children;
+}
 
 function AppContent() {
   const navigate = useNavigate();
@@ -85,95 +110,127 @@ function AppContent() {
     navigate("/app/reports");
   }
 
+  function handleLoginSuccess() {
+    navigate("/app");
+    showToast("Sesión iniciada correctamente.", "success");
+  }
+
+  function handleLogoutSuccess() {
+    navigate("/login");
+    showToast("Sesión cerrada correctamente.", "info");
+  }
+
   return (
     <>
       <ToastContainer toasts={toasts} onRemove={removeToast} />
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
+
+        <Route
+          path="/login"
+          element={
+            <PublicOnlyRoute>
+              <LoginPage onLoginSuccess={handleLoginSuccess} />
+            </PublicOnlyRoute>
+          }
+        />
 
         <Route
           path="/app"
           element={
-            <MainLayout>
-              <DashboardPage onDrillDown={handleDashboardDrillDown} />
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout onLogoutSuccess={handleLogoutSuccess}>
+                <DashboardPage onDrillDown={handleDashboardDrillDown} />
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/app/reports"
           element={
-            <MainLayout>
-              <ReportsPage
-                refreshKey={reportsRefreshKey}
-                filters={reportsFilters}
-                onFiltersChange={setReportsFilters}
-                onSelectReport={(reportId) => navigate(`/app/reports/${reportId}`)}
-              />
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout onLogoutSuccess={handleLogoutSuccess}>
+                <ReportsPage
+                  refreshKey={reportsRefreshKey}
+                  filters={reportsFilters}
+                  onFiltersChange={setReportsFilters}
+                  onSelectReport={(reportId) => navigate(`/app/reports/${reportId}`)}
+                />
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/app/reports/create"
           element={
-            <MainLayout>
-              <CreateReportPage
-                onReportCreated={handleReportCreated}
-                onActionError={handleActionError}
-              />
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout onLogoutSuccess={handleLogoutSuccess}>
+                <CreateReportPage
+                  onReportCreated={handleReportCreated}
+                  onActionError={handleActionError}
+                />
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/app/reports/import"
           element={
-            <MainLayout>
-              <ImportReportsPage
-                onReportsImported={handleReportsImported}
-                onActionError={handleActionError}
-              />
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout onLogoutSuccess={handleLogoutSuccess}>
+                <ImportReportsPage
+                  onReportsImported={handleReportsImported}
+                  onActionError={handleActionError}
+                />
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/app/reports/:id"
           element={
-            <MainLayout>
-              <ReportDetailPage
-                onReportProcessed={handleReportProcessed}
-                onEditReport={(reportId) =>
-                  navigate(`/app/reports/${reportId}/edit`)
-                }
-                onReportDeleted={handleReportDeleted}
-                onActionError={handleActionError}
-              />
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout onLogoutSuccess={handleLogoutSuccess}>
+                <ReportDetailPage
+                  onReportProcessed={handleReportProcessed}
+                  onEditReport={(reportId) =>
+                    navigate(`/app/reports/${reportId}/edit`)
+                  }
+                  onReportDeleted={handleReportDeleted}
+                  onActionError={handleActionError}
+                />
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/app/reports/:id/edit"
           element={
-            <MainLayout>
-              <EditReportPage
-                onReportUpdated={handleReportUpdated}
-                onActionError={handleActionError}
-              />
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout onLogoutSuccess={handleLogoutSuccess}>
+                <EditReportPage
+                  onReportUpdated={handleReportUpdated}
+                  onActionError={handleActionError}
+                />
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/app/profile"
           element={
-            <MainLayout>
-              <ProfilePage />
-            </MainLayout>
+            <ProtectedRoute>
+              <MainLayout onLogoutSuccess={handleLogoutSuccess}>
+                <ProfilePage />
+              </MainLayout>
+            </ProtectedRoute>
           }
         />
 

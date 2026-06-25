@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { loginMvpSession } from "../utils/auth";
 
-export default function LoginPage() {
-  const navigate = useNavigate();
+export default function LoginPage({ onLoginSuccess }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -18,7 +17,12 @@ export default function LoginPage() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    navigate("/app");
+
+    loginMvpSession();
+
+    if (onLoginSuccess) {
+      onLoginSuccess();
+    }
   }
 
   return (
@@ -135,8 +139,8 @@ export default function LoginPage() {
                 </p>
                 <p className="mt-2 text-sm leading-6 text-slate-300">
                   Esta pantalla representa el acceso al sistema dentro del MVP.
-                  La autenticación real y la gestión persistente de usuarios se
-                  plantean como extensión posterior.
+                  La autenticación se simula mediante sesión local para dar una
+                  experiencia más real al flujo público/privado.
                 </p>
               </div>
             </div>

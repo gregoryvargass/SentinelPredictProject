@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
+import Logo from "../components/Logo";
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div>
-            <h1 className="text-2xl font-bold text-white">SentinelPredict</h1>
+          <div className="flex items-center gap-4">
+            <Logo variant="brand" size="md" />
             <p className="text-sm text-slate-400">
               Gestión y análisis de incidentes industriales
             </p>
@@ -47,6 +48,9 @@ export default function LandingPage() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.08),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.05),transparent_30%)]" />
           <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
+              <div className="mb-6">
+                <Logo variant="brand" size="xl" />
+              </div>
               <p className="text-sm uppercase tracking-[0.25em] text-slate-400">
                 Plataforma inteligente
               </p>

@@ -2,14 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "./ConfirmModal";
 import UserAvatar from "./UserAvatar";
+import { getMvpSession, logoutMvpSession } from "../utils/auth";
 
-export default function UserMenu() {
+export default function UserMenu({ onLogoutSuccess }) {
   const [open, setOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const containerRef = useRef(null);
   const navigate = useNavigate();
 
-  const user = {
+  const session = getMvpSession();
+
+  const user = session?.user || {
     name: "Usuario MVP",
     email: "usuario@correo.com",
     role: "Administrador",
@@ -35,10 +38,27 @@ export default function UserMenu() {
     setOpen(false);
   }
 
+  function handleSwitchAccount() {
+    logoutMvpSession();
+    setOpen(false);
+
+    if (onLogoutSuccess) {
+      onLogoutSuccess();
+    } else {
+      navigate("/login");
+    }
+  }
+
   function handleLogout() {
+    logoutMvpSession();
     setShowLogoutModal(false);
     setOpen(false);
-    navigate("/login");
+
+    if (onLogoutSuccess) {
+      onLogoutSuccess();
+    } else {
+      navigate("/login");
+    }
   }
 
   return (
@@ -135,7 +155,7 @@ export default function UserMenu() {
             </button>
 
             <button
-              onClick={() => handleNavigate("/login")}
+              onClick={handleSwitchAccount}
               className="flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-sm text-slate-200 transition hover:bg-slate-800"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-800 text-base">
@@ -144,7 +164,7 @@ export default function UserMenu() {
               <div className="text-left">
                 <p className="font-medium text-white">Cambiar cuenta</p>
                 <p className="text-xs text-slate-500">
-                  Ir a la pantalla de inicio de sesión
+                  Cierra la sesión actual y vuelve al login
                 </p>
               </div>
             </button>
