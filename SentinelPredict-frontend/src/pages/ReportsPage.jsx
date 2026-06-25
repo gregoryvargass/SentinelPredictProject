@@ -1,7 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { getReports } from "../services/api";
 import { formatStatusLabel, getStatusBadgeClass } from "../utils/formatters";
+import { exportReportsToCsv } from "../utils/csv";
 import ReportsTableSkeleton from "../components/ReportsTableSkeleton";
+import EmptyState from "../components/EmptyState";
+
+const ITEMS_PER_PAGE = 5;
 
 export default function ReportsPage({
   onSelectReport,
@@ -12,6 +16,7 @@ export default function ReportsPage({
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const searchTerm = filters?.searchTerm ?? "";
   const statusFilter = filters?.statusFilter ?? "all";
@@ -25,6 +30,7 @@ export default function ReportsPage({
       ...prev,
       [name]: value,
     }));
+    setCurrentPage(1);
   }
 
   useEffect(() => {
@@ -110,11 +116,9 @@ export default function ReportsPage({
           const end = new Date(endDateFilter);
           matchesEndDate = reportDay <= end;
         }
-      } else {
-        if (startDateFilter || endDateFilter) {
-          matchesStartDate = false;
-          matchesEndDate = false;
-        }
+      } else if (startDateFilter || endDateFilter) {
+        matchesStartDate = false;
+        matchesEndDate = false;
       }
 
       return (
@@ -136,6 +140,31 @@ export default function ReportsPage({
     endDateFilter,
   ]);
 
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredReports.length / ITEMS_PER_PAGE)
+  );
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const paginatedReports = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredReports.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredReports, currentPage]);
+
+  const processedCount = filteredReports.filter(
+    (report) => report.status === "processed"
+  ).length;
+
+  const pendingCount = filteredReports.filter(
+    (report) => report.status === "pending"
+  ).length;
+
   function clearFilters() {
     onFiltersChange({
       searchTerm: "",
@@ -145,6 +174,14 @@ export default function ReportsPage({
       startDateFilter: "",
       endDateFilter: "",
     });
+    setCurrentPage(1);
+  }
+
+  function goToPage(page) {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }
 
   if (loading) {
@@ -152,32 +189,103 @@ export default function ReportsPage({
   }
 
   if (error) {
-    return <p className="text-red-400">{error}</p>;
+    return (
+      <div className="rounded-2xl border border-red-900 bg-red-950/30 p-6">
+        <p className="text-lg font-semibold text-red-300">Ocurrió un error</p>
+        <p className="mt-2 text-sm leading-6 text-red-200">{error}</p>
+      </div>
+    );
   }
 
   return (
     <div className="space-y-6">
-      <section>
-        <h2 className="text-3xl font-semibold text-white">Reportes</h2>
-        <p className="mt-2 text-slate-400">
-          Consulta de reportes narrativos registrados en el sistema.
-        </p>
+      <section className="overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-6 shadow-sm">
+        <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+          <div className="max-w-3xl">
+            <p className="text-sm uppercase tracking-[0.2em] text-slate-400">
+              Gestión documental
+            </p>
+            <h2 className="mt-3 text-4xl font-bold tracking-tight text-white">
+              Consulta y explora los reportes del sistema
+            </h2>
+            <p className="mt-4 max-w-2xl leading-7 text-slate-300">
+              Filtra, revisa y exporta reportes narrativos registrados en
+              SentinelPredict para identificar incidentes, áreas recurrentes y
+              estados de procesamiento.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-slate-800 bg-slate-950/70 px-4 py-3">
+            <p className="text-sm text-slate-400">Resumen visible</p>
+            <p className="mt-2 text-sm leading-6 text-slate-200">
+              Actualmente se muestran{" "}
+              <span className="font-semibold text-white">
+                {filteredReports.length}
+              </span>{" "}
+              reportes del total registrado.
+            </p>
+          </div>
+        </div>
       </section>
 
-      <section className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-        <p className="text-sm text-slate-400">Resumen de resultados</p>
-        <p className="mt-2 text-slate-200">
-          Mostrando{" "}
-          <span className="font-semibold text-white">
+      <section className="grid gap-4 md:grid-cols-3">
+        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
+          <p className="text-sm text-slate-400">Reportes visibles</p>
+          <p className="mt-2 text-3xl font-bold text-white">
             {filteredReports.length}
-          </span>{" "}
-          de{" "}
-          <span className="font-semibold text-white">{reports.length}</span>{" "}
-          reportes registrados.
-        </p>
+          </p>
+          <p className="mt-2 text-sm text-slate-300">
+            Registros dentro de los filtros activos.
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-5 shadow-sm">
+          <p className="text-sm text-slate-300">Procesados</p>
+          <p className="mt-2 text-3xl font-bold text-white">{processedCount}</p>
+          <p className="mt-2 text-sm text-slate-200">
+            Reportes ya analizados por el sistema.
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-amber-500/20 bg-amber-500/10 p-5 shadow-sm">
+          <p className="text-sm text-slate-300">Pendientes</p>
+          <p className="mt-2 text-3xl font-bold text-white">{pendingCount}</p>
+          <p className="mt-2 text-sm text-slate-200">
+            Casos todavía sin procesamiento completo.
+          </p>
+        </div>
       </section>
 
-      <section className="space-y-4 rounded-2xl border border-slate-800 bg-slate-900 p-4">
+      <section className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-sm text-slate-400">Acciones disponibles</p>
+            <p className="mt-2 text-slate-200">
+              Exporta todos los resultados filtrados a un archivo CSV para
+              revisión externa o respaldo.
+            </p>
+          </div>
+
+          <button
+            onClick={() =>
+              exportReportsToCsv(filteredReports, "sentinelpredict-reportes.csv")
+            }
+            disabled={filteredReports.length === 0}
+            className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm font-semibold text-slate-100 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Exportar CSV
+          </button>
+        </div>
+      </section>
+
+      <section className="space-y-5 rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
+        <div>
+          <p className="text-sm text-slate-400">Filtros de consulta</p>
+          <h3 className="mt-1 text-xl font-semibold text-white">
+            Ajusta la vista de reportes
+          </h3>
+        </div>
+
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <div className="space-y-2">
             <label className="text-sm text-slate-300">Buscar</label>
@@ -186,7 +294,7 @@ export default function ReportsPage({
               value={searchTerm}
               onChange={(event) => updateFilter("searchTerm", event.target.value)}
               placeholder="Título, descripción, área..."
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
+              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
             />
           </div>
 
@@ -194,10 +302,8 @@ export default function ReportsPage({
             <label className="text-sm text-slate-300">Filtrar por estado</label>
             <select
               value={statusFilter}
-              onChange={(event) =>
-                updateFilter("statusFilter", event.target.value)
-              }
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
+              onChange={(event) => updateFilter("statusFilter", event.target.value)}
+              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
             >
               <option value="all">Todos</option>
               <option value="pending">Pendiente</option>
@@ -211,7 +317,7 @@ export default function ReportsPage({
             <select
               value={areaFilter}
               onChange={(event) => updateFilter("areaFilter", event.target.value)}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
+              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
             >
               <option value="all">Todas</option>
               {availableAreas.map((area) => (
@@ -231,7 +337,7 @@ export default function ReportsPage({
               onChange={(event) =>
                 updateFilter("classificationFilter", event.target.value)
               }
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
+              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
             >
               <option value="all">Todas</option>
               {availableClassifications.map((label) => (
@@ -243,7 +349,7 @@ export default function ReportsPage({
           </div>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_0.9fr]">
           <div className="space-y-2">
             <label className="text-sm text-slate-300">Fecha desde</label>
             <input
@@ -252,7 +358,7 @@ export default function ReportsPage({
               onChange={(event) =>
                 updateFilter("startDateFilter", event.target.value)
               }
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
+              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
             />
           </div>
 
@@ -264,14 +370,14 @@ export default function ReportsPage({
               onChange={(event) =>
                 updateFilter("endDateFilter", event.target.value)
               }
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
+              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
             />
           </div>
 
           <div className="flex items-end">
             <button
               onClick={clearFilters}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
+              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm font-semibold text-slate-200 hover:bg-slate-800"
             >
               Limpiar filtros
             </button>
@@ -279,89 +385,152 @@ export default function ReportsPage({
         </div>
       </section>
 
-      <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900">
-        <table className="min-w-full divide-y divide-slate-800 text-sm">
-          <thead className="bg-slate-950">
-            <tr>
-              <th className="px-4 py-3 text-left font-medium text-slate-300">
-                ID
-              </th>
-              <th className="px-4 py-3 text-left font-medium text-slate-300">
-                Título
-              </th>
-              <th className="px-4 py-3 text-left font-medium text-slate-300">
-                Área
-              </th>
-              <th className="px-4 py-3 text-left font-medium text-slate-300">
-                Clasificación
-              </th>
-              <th className="px-4 py-3 text-left font-medium text-slate-300">
-                Fecha
-              </th>
-              <th className="px-4 py-3 text-left font-medium text-slate-300">
-                Estado
-              </th>
-              <th className="px-4 py-3 text-left font-medium text-slate-300">
-                Acción
-              </th>
-            </tr>
-          </thead>
+      <div className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-sm">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-slate-800 text-sm">
+            <thead className="sticky top-0 bg-slate-950/95 backdrop-blur">
+              <tr>
+                <th className="px-4 py-4 text-left font-medium text-slate-300">
+                  ID
+                </th>
+                <th className="px-4 py-4 text-left font-medium text-slate-300">
+                  Título
+                </th>
+                <th className="px-4 py-4 text-left font-medium text-slate-300">
+                  Área
+                </th>
+                <th className="px-4 py-4 text-left font-medium text-slate-300">
+                  Clasificación
+                </th>
+                <th className="px-4 py-4 text-left font-medium text-slate-300">
+                  Fecha
+                </th>
+                <th className="px-4 py-4 text-left font-medium text-slate-300">
+                  Estado
+                </th>
+                <th className="px-4 py-4 text-left font-medium text-slate-300">
+                  Acción
+                </th>
+              </tr>
+            </thead>
 
-          <tbody className="divide-y divide-slate-800">
-            {filteredReports.length > 0 ? (
-              filteredReports.map((report) => (
-                <tr key={report.id} className="hover:bg-slate-800/40">
-                  <td className="px-4 py-3 text-slate-200">{report.id}</td>
-                  <td className="px-4 py-3 text-white">{report.title}</td>
-                  <td className="px-4 py-3 text-slate-300">
-                    {report.area || "N/A"}
-                  </td>
-                  <td className="px-4 py-3 text-slate-300">
-                    {report.classification_label ? (
-                      <span className="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-medium text-slate-200">
-                        {report.classification_label}
+            <tbody className="divide-y divide-slate-800">
+              {paginatedReports.length > 0 ? (
+                paginatedReports.map((report) => (
+                  <tr
+                    key={report.id}
+                    className="transition-colors hover:bg-slate-800/40"
+                  >
+                    <td className="px-4 py-4 align-top text-slate-400">
+                      #{report.id}
+                    </td>
+
+                    <td className="px-4 py-4 align-top">
+                      <p className="font-medium text-white">{report.title}</p>
+                      <p className="mt-2 max-w-md text-xs leading-6 text-slate-500">
+                        {report.description || "Sin descripción"}
+                      </p>
+                    </td>
+
+                    <td className="px-4 py-4 align-top text-slate-300">
+                      {report.area || "N/A"}
+                    </td>
+
+                    <td className="px-4 py-4 align-top text-slate-300">
+                      {report.classification_label ? (
+                        <span className="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-medium text-slate-200">
+                          {report.classification_label}
+                        </span>
+                      ) : (
+                        <span className="text-slate-500">Sin procesar</span>
+                      )}
+                    </td>
+
+                    <td className="px-4 py-4 align-top text-slate-300">
+                      {report.incident_date
+                        ? new Date(report.incident_date).toLocaleDateString()
+                        : "N/A"}
+                    </td>
+
+                    <td className="px-4 py-4 align-top">
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs font-medium ${getStatusBadgeClass(
+                          report.status
+                        )}`}
+                      >
+                        {formatStatusLabel(report.status)}
                       </span>
-                    ) : (
-                      <span className="text-slate-500">Sin procesar</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-slate-300">
-                    {report.incident_date
-                      ? new Date(report.incident_date).toLocaleDateString()
-                      : "N/A"}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`rounded-full px-3 py-1 text-xs font-medium ${getStatusBadgeClass(
-                        report.status
-                      )}`}
-                    >
-                      {formatStatusLabel(report.status)}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <button
-                      onClick={() => onSelectReport(report.id)}
-                      className="rounded-lg bg-white px-3 py-2 text-xs font-semibold text-slate-950"
-                    >
-                      Ver detalle
-                    </button>
+                    </td>
+
+                    <td className="px-4 py-4 align-top">
+                      <button
+                        onClick={() => onSelectReport(report.id)}
+                        className="rounded-2xl bg-white px-4 py-2 text-xs font-semibold text-slate-950 transition hover:opacity-90"
+                      >
+                        Ver detalle
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" className="px-4 py-8">
+                    <EmptyState
+                      title="No hay reportes para mostrar"
+                      description="No se encontraron reportes que coincidan con la búsqueda o los filtros aplicados. Ajusta los filtros o limpia la búsqueda para ver más resultados."
+                      actionLabel="Limpiar filtros"
+                      onAction={clearFilters}
+                    />
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan="7"
-                  className="px-4 py-6 text-center text-slate-400"
-                >
-                  No hay reportes que coincidan con la búsqueda o filtros aplicados.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      {filteredReports.length > 0 && (
+        <section className="flex flex-col gap-4 rounded-2xl border border-slate-800 bg-slate-900 p-4 md:flex-row md:items-center md:justify-between">
+          <p className="text-sm text-slate-400">
+            Página <span className="font-semibold text-white">{currentPage}</span>{" "}
+            de <span className="font-semibold text-white">{totalPages}</span>
+          </p>
+
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Anterior
+            </button>
+
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+              (page) => (
+                <button
+                  key={page}
+                  onClick={() => goToPage(page)}
+                  className={`rounded-2xl px-4 py-2 text-sm font-medium transition ${
+                    currentPage === page
+                      ? "bg-white text-slate-950"
+                      : "border border-slate-700 bg-slate-950 text-slate-200 hover:bg-slate-800"
+                  }`}
+                >
+                  {page}
+                </button>
+              )
+            )}
+
+            <button
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Siguiente
+            </button>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

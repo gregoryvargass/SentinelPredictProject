@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import DashboardPage from "./pages/DashboardPage";
 import ReportsPage from "./pages/ReportsPage";
 import ReportDetailPage from "./pages/ReportDetailPage";
 import CreateReportPage from "./pages/CreateReportPage";
 import EditReportPage from "./pages/EditReportPage";
+import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage";
+import ImportReportsPage from "./pages/ImportReportsPage";
+import LandingPage from "./pages/LandingPage";
 import ToastContainer from "./components/ToastContainer";
 
 const defaultReportsFilters = {
@@ -16,12 +21,11 @@ const defaultReportsFilters = {
   endDateFilter: "",
 };
 
-export default function App() {
-  const [currentPage, setCurrentPage] = useState("dashboard");
-  const [selectedReportId, setSelectedReportId] = useState(null);
+function AppContent() {
+  const navigate = useNavigate();
+
   const [reportsRefreshKey, setReportsRefreshKey] = useState(0);
   const [reportsFilters, setReportsFilters] = useState(defaultReportsFilters);
-  const [reportsScrollY, setReportsScrollY] = useState(0);
   const [toasts, setToasts] = useState([]);
 
   function showToast(message, type = "info") {
@@ -37,33 +41,9 @@ export default function App() {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
   }
 
-  function handleNavigate(page) {
-    setCurrentPage(page);
-
-    if (page !== "report-detail" && page !== "edit-report") {
-      setSelectedReportId(null);
-    }
-  }
-
-  function handleSelectReport(reportId) {
-    setReportsScrollY(window.scrollY);
-    setSelectedReportId(reportId);
-    setCurrentPage("report-detail");
-  }
-
-  function handleEditReport(reportId) {
-    setSelectedReportId(reportId);
-    setCurrentPage("edit-report");
-  }
-
-  function handleBackToReports() {
-    setCurrentPage("reports");
-  }
-
   function handleReportCreated(createdReport) {
     setReportsRefreshKey((prev) => prev + 1);
-    setSelectedReportId(createdReport.id);
-    setCurrentPage("report-detail");
+    navigate(`/app/reports/${createdReport.id}`);
     showToast(`Reporte ${createdReport.id} creado correctamente.`, "success");
   }
 
@@ -74,16 +54,23 @@ export default function App() {
 
   function handleReportUpdated(updatedReport) {
     setReportsRefreshKey((prev) => prev + 1);
-    setSelectedReportId(updatedReport.id);
-    setCurrentPage("report-detail");
+    navigate(`/app/reports/${updatedReport.id}`);
     showToast(`Reporte ${updatedReport.id} actualizado correctamente.`, "success");
   }
 
   function handleReportDeleted() {
     setReportsRefreshKey((prev) => prev + 1);
-    setSelectedReportId(null);
-    setCurrentPage("reports");
+    navigate("/app/reports");
     showToast("Reporte eliminado correctamente.", "warning");
+  }
+
+  function handleReportsImported(createdReports) {
+    setReportsRefreshKey((prev) => prev + 1);
+    navigate("/app/reports");
+    showToast(
+      `${createdReports.length} reportes importados correctamente.`,
+      "success"
+    );
   }
 
   function handleActionError(message) {
@@ -95,69 +82,107 @@ export default function App() {
       ...prev,
       ...partialFilters,
     }));
-    setCurrentPage("reports");
+    navigate("/app/reports");
   }
-
-  useEffect(() => {
-    if (currentPage === "reports") {
-      const timer = setTimeout(() => {
-        window.scrollTo({
-          top: reportsScrollY,
-          behavior: "auto",
-        });
-      }, 0);
-
-      return () => clearTimeout(timer);
-    }
-  }, [currentPage, reportsScrollY]);
 
   return (
     <>
       <ToastContainer toasts={toasts} onRemove={removeToast} />
 
-      <MainLayout
-        currentPage={currentPage}
-        onNavigate={handleNavigate}
-        onBackToReports={handleBackToReports}
-      >
-        {currentPage === "dashboard" && (
-          <DashboardPage onDrillDown={handleDashboardDrillDown} />
-        )}
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
 
-        {currentPage === "reports" && (
-          <ReportsPage
-            onSelectReport={handleSelectReport}
-            refreshKey={reportsRefreshKey}
-            filters={reportsFilters}
-            onFiltersChange={setReportsFilters}
-          />
-        )}
+        <Route
+          path="/app"
+          element={
+            <MainLayout>
+              <DashboardPage onDrillDown={handleDashboardDrillDown} />
+            </MainLayout>
+          }
+        />
 
-        {currentPage === "report-detail" && (
-          <ReportDetailPage
-            reportId={selectedReportId}
-            onReportProcessed={handleReportProcessed}
-            onEditReport={handleEditReport}
-            onReportDeleted={handleReportDeleted}
-            onActionError={handleActionError}
-          />
-        )}
+        <Route
+          path="/app/reports"
+          element={
+            <MainLayout>
+              <ReportsPage
+                refreshKey={reportsRefreshKey}
+                filters={reportsFilters}
+                onFiltersChange={setReportsFilters}
+                onSelectReport={(reportId) => navigate(`/app/reports/${reportId}`)}
+              />
+            </MainLayout>
+          }
+        />
 
-        {currentPage === "edit-report" && (
-          <EditReportPage
-            reportId={selectedReportId}
-            onReportUpdated={handleReportUpdated}
-            onActionError={handleActionError}
-          />
-        )}
+        <Route
+          path="/app/reports/create"
+          element={
+            <MainLayout>
+              <CreateReportPage
+                onReportCreated={handleReportCreated}
+                onActionError={handleActionError}
+              />
+            </MainLayout>
+          }
+        />
 
-        {currentPage === "create-report" && (
-          <CreateReportPage
-            onReportCreated={handleReportCreated}
-            onActionError={handleActionError}
-          />
-        )}
-      </MainLayout>
+        <Route
+          path="/app/reports/import"
+          element={
+            <MainLayout>
+              <ImportReportsPage
+                onReportsImported={handleReportsImported}
+                onActionError={handleActionError}
+              />
+            </MainLayout>
+          }
+        />
+
+        <Route
+          path="/app/reports/:id"
+          element={
+            <MainLayout>
+              <ReportDetailPage
+                onReportProcessed={handleReportProcessed}
+                onEditReport={(reportId) =>
+                  navigate(`/app/reports/${reportId}/edit`)
+                }
+                onReportDeleted={handleReportDeleted}
+                onActionError={handleActionError}
+              />
+            </MainLayout>
+          }
+        />
+
+        <Route
+          path="/app/reports/:id/edit"
+          element={
+            <MainLayout>
+              <EditReportPage
+                onReportUpdated={handleReportUpdated}
+                onActionError={handleActionError}
+              />
+            </MainLayout>
+          }
+        />
+
+        <Route
+          path="/app/profile"
+          element={
+            <MainLayout>
+              <ProfilePage />
+            </MainLayout>
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </>
   );
+}
+
+export default function App() {
+  return <AppContent />;
 }

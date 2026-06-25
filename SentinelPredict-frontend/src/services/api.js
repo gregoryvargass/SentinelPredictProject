@@ -1,4 +1,5 @@
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 
 export async function getDashboardData(filters = {}) {
   const params = new URLSearchParams();
@@ -71,6 +72,17 @@ export async function createReport(payload) {
   }
 
   return response.json();
+}
+
+export async function createManyReports(reports) {
+  const results = [];
+
+  for (const report of reports) {
+    const created = await createReport(report);
+    results.push(created);
+  }
+
+  return results;
 }
 
 export async function updateReport(reportId, payload) {

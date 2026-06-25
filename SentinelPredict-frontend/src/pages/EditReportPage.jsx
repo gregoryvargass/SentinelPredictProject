@@ -1,9 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { getReportFull, updateReport } from "../services/api";
 import ReportDetailSkeleton from "../components/ReportDetailSkeleton";
 
-export default function EditReportPage({ reportId, onReportUpdated, onActionError }) {
+export default function EditReportPage({
+  onReportUpdated,
+  onActionError,
+}) {
+  const { id } = useParams();
+  const reportId = id;
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -31,12 +37,12 @@ export default function EditReportPage({ reportId, onReportUpdated, onActionErro
             : "",
         });
       } catch (err) {
-      const message = err.message || "No se pudo actualizar el reporte";
-      setError(message);
+        const message = err.message || "No se pudo cargar el reporte";
+        setError(message);
 
-      if (onActionError) {
-        onActionError(message);
-      }
+        if (onActionError) {
+          onActionError(message);
+        }
       } finally {
         setLoading(false);
       }
@@ -45,7 +51,7 @@ export default function EditReportPage({ reportId, onReportUpdated, onActionErro
     if (reportId) {
       loadReport();
     }
-  }, [reportId]);
+  }, [reportId, onActionError]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -76,7 +82,12 @@ export default function EditReportPage({ reportId, onReportUpdated, onActionErro
         onReportUpdated(updatedReport);
       }
     } catch (err) {
-      setError(err.message || "No se pudo actualizar el reporte");
+      const message = err.message || "No se pudo actualizar el reporte";
+      setError(message);
+
+      if (onActionError) {
+        onActionError(message);
+      }
     } finally {
       setSubmitting(false);
     }

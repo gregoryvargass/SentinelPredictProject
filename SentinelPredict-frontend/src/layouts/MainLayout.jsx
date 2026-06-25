@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import UserMenu from "../components/UserMenu";
 
-export default function MainLayout({
-  children,
-  currentPage,
-  onNavigate,
-  onBackToReports,
-}) {
+export default function MainLayout({ children }) {
   const [showHeader, setShowHeader] = useState(true);
   const lastScrollY = useRef(0);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isReportDetail =
+    location.pathname.startsWith("/app/reports/") &&
+    location.pathname !== "/app/reports" &&
+    !location.pathname.endsWith("/edit") &&
+    location.pathname !== "/app/reports/create" &&
+    location.pathname !== "/app/reports/import";
 
   useEffect(() => {
     function handleScroll() {
@@ -31,6 +37,14 @@ export default function MainLayout({
     };
   }, []);
 
+  function navClass(isActive) {
+    return `rounded-lg px-4 py-2 text-sm font-medium ${
+      isActive
+        ? "bg-white text-slate-950"
+        : "bg-slate-800 text-slate-200 hover:bg-slate-700"
+    }`;
+  }
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <header
@@ -38,7 +52,7 @@ export default function MainLayout({
           showHeader ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-4 md:flex-row md:items-center md:justify-between">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-4 xl:flex-row xl:items-center xl:justify-between">
           <div>
             <h1 className="text-xl font-bold text-white">SentinelPredict</h1>
             <p className="text-sm text-slate-400">
@@ -46,49 +60,49 @@ export default function MainLayout({
             </p>
           </div>
 
-          <nav className="flex flex-wrap gap-2">
-            <button
-              onClick={() => onNavigate("dashboard")}
-              className={`rounded-lg px-4 py-2 text-sm font-medium ${
-                currentPage === "dashboard"
-                  ? "bg-white text-slate-950"
-                  : "bg-slate-800 text-slate-200 hover:bg-slate-700"
-              }`}
-            >
-              Dashboard
-            </button>
-
-            <button
-              onClick={() => onNavigate("reports")}
-              className={`rounded-lg px-4 py-2 text-sm font-medium ${
-                currentPage === "reports"
-                  ? "bg-white text-slate-950"
-                  : "bg-slate-800 text-slate-200 hover:bg-slate-700"
-              }`}
-            >
-              Reportes
-            </button>
-
-            <button
-              onClick={() => onNavigate("create-report")}
-              className={`rounded-lg px-4 py-2 text-sm font-medium ${
-                currentPage === "create-report"
-                  ? "bg-white text-slate-950"
-                  : "bg-slate-800 text-slate-200 hover:bg-slate-700"
-              }`}
-            >
-              Crear reporte
-            </button>
-
-            {currentPage === "report-detail" && (
-              <button
-                onClick={onBackToReports}
-                className="rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-700"
+          <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
+            <nav className="flex flex-wrap gap-2">
+              <NavLink
+                to="/app"
+                end
+                className={({ isActive }) => navClass(isActive)}
               >
-                Volver a reportes
-              </button>
-            )}
-          </nav>
+                Dashboard
+              </NavLink>
+
+              <NavLink
+                to="/app/reports"
+                className={({ isActive }) => navClass(isActive)}
+              >
+                Reportes
+              </NavLink>
+
+              <NavLink
+                to="/app/reports/create"
+                className={({ isActive }) => navClass(isActive)}
+              >
+                Crear reporte
+              </NavLink>
+
+              <NavLink
+                to="/app/reports/import"
+                className={({ isActive }) => navClass(isActive)}
+              >
+                Importar CSV
+              </NavLink>
+
+              {isReportDetail && (
+                <button
+                  onClick={() => navigate(-1)}
+                  className="rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-slate-700"
+                >
+                  Volver
+                </button>
+              )}
+            </nav>
+
+            <UserMenu />
+          </div>
         </div>
       </header>
 

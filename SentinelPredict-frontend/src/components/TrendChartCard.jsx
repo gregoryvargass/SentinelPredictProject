@@ -10,10 +10,13 @@ import {
 
 export default function TrendChartCard({ title, data }) {
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-      <h3 className="text-lg font-semibold text-white">{title}</h3>
+    <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
+      <div className="mb-4">
+        <p className="text-sm text-slate-400">Tendencia temporal</p>
+        <h3 className="mt-1 text-lg font-semibold text-white">{title}</h3>
+      </div>
 
-      <div className="mt-4 h-72">
+      <div className="h-72 rounded-xl border border-slate-800 bg-slate-950 p-3">
         {data && data.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
@@ -38,7 +41,9 @@ export default function TrendChartCard({ title, data }) {
             </LineChart>
           </ResponsiveContainer>
         ) : (
-          <p className="text-sm text-slate-400">No hay datos disponibles.</p>
+          <div className="flex h-full items-center justify-center">
+            <p className="text-sm text-slate-400">No hay datos disponibles.</p>
+          </div>
         )}
       </div>
     </div>
