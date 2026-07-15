@@ -33,8 +33,8 @@ class ReportCreate(BaseModel):
         description="Fecha y hora del incidente"
     )
 
-    model_config = {
-        "json_schema_extra": {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "title": "Resbalón en zona de carga",
                 "description": "Un operario resbaló por presencia de líquido en el suelo mientras movía materiales.",
@@ -43,14 +43,35 @@ class ReportCreate(BaseModel):
                 "incident_date": "2026-04-06T11:00:00"
             }
         }
-    }
+    )
+
 
 class ReportUpdate(BaseModel):
-    title: str = Field(..., min_length=3, max_length=200, description="Título descriptivo del reporte")
-    description: str = Field(..., min_length=10, description="Descripción narrativa del incidente industrial")
-    source: Optional[str] = Field(default="manual", max_length=100, description="Origen del reporte")
-    area: Optional[str] = Field(default=None, max_length=100, description="Área operativa donde ocurrió el incidente")
-    incident_date: Optional[datetime] = Field(default=None, description="Fecha y hora del incidente")
+    title: str = Field(
+        ...,
+        min_length=3,
+        max_length=200,
+        description="Título descriptivo del reporte"
+    )
+    description: str = Field(
+        ...,
+        min_length=10,
+        description="Descripción narrativa del incidente industrial"
+    )
+    source: Optional[str] = Field(
+        default="manual",
+        max_length=100,
+        description="Origen del reporte"
+    )
+    area: Optional[str] = Field(
+        default=None,
+        max_length=100,
+        description="Área operativa donde ocurrió el incidente"
+    )
+    incident_date: Optional[datetime] = Field(
+        default=None,
+        description="Fecha y hora del incidente"
+    )
 
 
 class ReportResponse(BaseModel):

@@ -1,0 +1,97 @@
+text,label
+El técnico perdió el equilibrio y cayó por una superficie húmeda sin señalización en el almacén mientras movilizaba materiales.,riesgo_caida
+El supervisor resbaló durante el desplazamiento por un derrame no limpiado a tiempo en la zona de carga mientras movilizaba materiales.,riesgo_caida
+El operario tropezó en el pasillo y cayó por una mancha de lubricante en el pasillo cerca del muelle mientras movilizaba materiales.,riesgo_caida
+El operario tropezó en el pasillo y cayó por una superficie húmeda sin señalización en el almacén mientras movilizaba materiales.,riesgo_caida
+El supervisor perdió el equilibrio y cayó por aceite derramado en el piso cerca del muelle mientras movilizaba materiales.,riesgo_caida
+La operaria cayó mientras trasladaba materiales debido a agua acumulada en la zona de carga en la zona de carga mientras movilizaba materiales.,riesgo_caida
+Un trabajador tropezó en el pasillo y cayó debido a agua acumulada en la zona de carga cerca del muelle mientras movilizaba materiales.,riesgo_caida
+El supervisor cayó mientras trasladaba materiales por una mancha de lubricante en el pasillo en la zona de despacho mientras movilizaba materiales.,riesgo_caida
+El operario tropezó y sufrió una caída leve debido a piso resbaloso cerca del despacho cerca del muelle mientras movilizaba materiales.,riesgo_caida
+Un trabajador tropezó en el pasillo y cayó por una superficie húmeda sin señalización cerca del muelle mientras movilizaba materiales.,riesgo_caida
+El operario tropezó y sufrió una caída leve por una mancha de lubricante en el pasillo en la zona de despacho mientras movilizaba materiales.,riesgo_caida
+La trabajadora tropezó en el pasillo y cayó por aceite derramado en el piso en la zona de carga mientras movilizaba materiales.,riesgo_caida
+El supervisor tropezó en el pasillo y cayó debido a piso resbaloso cerca del despacho en el almacén mientras movilizaba materiales.,riesgo_caida
+Un trabajador tropezó y sufrió una caída leve por una mancha de lubricante en el pasillo en la zona de carga mientras movilizaba materiales.,riesgo_caida
+La trabajadora cayó mientras trasladaba materiales por una mancha de lubricante en el pasillo cerca del muelle mientras movilizaba materiales.,riesgo_caida
+El operario tropezó y sufrió una caída leve por una superficie húmeda sin señalización en el área de producción mientras movilizaba materiales.,riesgo_caida
+El supervisor tropezó y sufrió una caída leve debido a piso resbaloso cerca del despacho en el pasillo interno mientras movilizaba materiales.,riesgo_caida
+La trabajadora tropezó en el pasillo y cayó debido a agua acumulada en la zona de carga cerca del muelle mientras movilizaba materiales.,riesgo_caida
+La operaria resbaló al caminar debido a agua acumulada en la zona de carga en el almacén mientras movilizaba materiales.,riesgo_caida
+Un trabajador perdió el equilibrio y cayó por aceite derramado en el piso en el pasillo interno mientras movilizaba materiales.,riesgo_caida
+El técnico resbaló al caminar por aceite derramado en el piso en el pasillo interno mientras movilizaba materiales.,riesgo_caida
+El técnico resbaló durante el desplazamiento por un derrame no limpiado a tiempo en el pasillo interno mientras movilizaba materiales.,riesgo_caida
+La trabajadora tropezó en el pasillo y cayó por un derrame no limpiado a tiempo en el área de producción mientras movilizaba materiales.,riesgo_caida
+Un trabajador tropezó en el pasillo y cayó por un derrame no limpiado a tiempo en el pasillo interno mientras movilizaba materiales.,riesgo_caida
+La mano del operador recibió un golpe al manipular una herramienta industrial mientras ajustaba la maquinaria en el taller.,riesgo_mecanico
+Un ayudante recibió un golpe al manipular una herramienta industrial por exposición a partes móviles en producción.,riesgo_mecanico
+Un ayudante quedó atrapada en una máquina prensadora por exposición a partes móviles junto a la prensa.,riesgo_mecanico
+La operaria recibió un golpe con la banda transportadora por ausencia de guarda de seguridad en el área de mantenimiento.,riesgo_mecanico
+El trabajador recibió un golpe al manipular una herramienta industrial mientras ajustaba la maquinaria en producción.,riesgo_mecanico
+La operaria se lesionó con un mecanismo en movimiento por ausencia de guarda de seguridad en el área de mantenimiento.,riesgo_mecanico
+La mano del operador recibió un golpe al manipular una herramienta industrial mientras ajustaba la maquinaria en la banda de traslado.,riesgo_mecanico
+La mano del operador sufrió atrapamiento parcial en el equipo mientras ajustaba la maquinaria en la línea de empaque.,riesgo_mecanico
+El operario tuvo contacto con una pieza móvil mientras ajustaba la maquinaria en la línea de empaque.,riesgo_mecanico
+Un ayudante quedó atrapada en una máquina prensadora mientras ajustaba la maquinaria en el taller.,riesgo_mecanico
+El técnico se lesionó con un mecanismo en movimiento por ausencia de guarda de seguridad junto a la prensa.,riesgo_mecanico
+La mano del operador sufrió atrapamiento parcial en el equipo mientras ajustaba la maquinaria en producción.,riesgo_mecanico
+Un ayudante tuvo contacto con una pieza móvil durante una maniobra insegura en el taller.,riesgo_mecanico
+El trabajador recibió un golpe con la banda transportadora mientras el equipo seguía en funcionamiento en la línea de empaque.,riesgo_mecanico
+Un ayudante sufrió atrapamiento parcial en el equipo al intervenir la máquina sin bloqueo previo en producción.,riesgo_mecanico
+El trabajador tuvo contacto con una pieza móvil mientras el equipo seguía en funcionamiento en producción.,riesgo_mecanico
+El trabajador se lesionó con un mecanismo en movimiento al intervenir la máquina sin bloqueo previo en el taller.,riesgo_mecanico
+El técnico quedó atrapada en una máquina prensadora mientras ajustaba la maquinaria en el área de mantenimiento.,riesgo_mecanico
+El trabajador sufrió atrapamiento parcial en el equipo por ausencia de guarda de seguridad en la banda de traslado.,riesgo_mecanico
+Un ayudante recibió un golpe con la banda transportadora por exposición a partes móviles en producción.,riesgo_mecanico
+El operario sufrió atrapamiento parcial en el equipo mientras ajustaba la maquinaria en el taller.,riesgo_mecanico
+El trabajador tuvo contacto con una pieza móvil al intervenir la máquina sin bloqueo previo en el área de mantenimiento.,riesgo_mecanico
+El trabajador sufrió atrapamiento parcial en el equipo mientras ajustaba la maquinaria en producción.,riesgo_mecanico
+La mano del operador tuvo contacto con una pieza móvil por ausencia de guarda de seguridad junto a la prensa.,riesgo_mecanico
+"El supervisor reportó desorden general y materiales fuera de lugar en el área de producción, sin que exista un control visual adecuado.",riesgo_general
+"Durante la inspección se detectó condición insegura general por obstrucción del paso en el área de producción, afectando el tránsito normal del área.",riesgo_general
+"Durante la inspección se detectó equipos y cajas bloqueando la ruta peatonal en la ruta de evacuación, aumentando el riesgo operativo general.",riesgo_general
+"El supervisor reportó objetos mal distribuidos en el almacén en el almacén, aumentando el riesgo operativo general.",riesgo_general
+"Se observó objetos mal distribuidos en el almacén en el pasillo principal, aumentando el riesgo operativo general.",riesgo_general
+"El personal informó falta de orden y limpieza en la zona operativa en el almacén, generando una condición insegura para el personal.",riesgo_general
+"Se registró desorden general y materiales fuera de lugar en la zona de despacho, lo que dificulta la circulación segura.",riesgo_general
+"El supervisor reportó objetos mal distribuidos en el almacén en la ruta de evacuación, afectando el tránsito normal del área.",riesgo_general
+"Se observó mala señalización en el pasillo de circulación en el área de producción, afectando el tránsito normal del área.",riesgo_general
+"Durante la inspección se detectó falta de orden y limpieza en la zona operativa en el almacén, aumentando el riesgo operativo general.",riesgo_general
+"Se observó objetos mal distribuidos en el almacén en el almacén, sin que exista un control visual adecuado.",riesgo_general
+"Se identificó mala señalización en el pasillo de circulación en la zona de despacho, sin que exista un control visual adecuado.",riesgo_general
+"Se registró mala señalización en el pasillo de circulación en la zona de despacho, aumentando el riesgo operativo general.",riesgo_general
+"Se registró falta de orden y limpieza en la zona operativa en la zona de despacho, generando una condición insegura para el personal.",riesgo_general
+"Se observó desorden general y materiales fuera de lugar en el área de producción, aumentando el riesgo operativo general.",riesgo_general
+"Se observó mala señalización en el pasillo de circulación en el área de producción, aumentando el riesgo operativo general.",riesgo_general
+"Se registró mala señalización en el pasillo de circulación en la zona de carga, afectando el tránsito normal del área.",riesgo_general
+"Se observó desorden general y materiales fuera de lugar en el almacén, lo que dificulta la circulación segura.",riesgo_general
+"Durante la inspección se detectó equipos y cajas bloqueando la ruta peatonal en la zona de despacho, aumentando el riesgo operativo general.",riesgo_general
+"Se identificó desorden general y materiales fuera de lugar en la zona de carga, generando una condición insegura para el personal.",riesgo_general
+"El personal informó falta de orden y limpieza en la zona operativa en la zona de carga, lo que dificulta la circulación segura.",riesgo_general
+"Durante la inspección se detectó objetos mal distribuidos en el almacén en la zona de despacho, aumentando el riesgo operativo general.",riesgo_general
+"Se registró falta de orden y limpieza en la zona operativa en el pasillo principal, sin medidas preventivas visibles.",riesgo_general
+"El personal informó falta de orden y limpieza en la zona operativa en el almacén, lo que dificulta la circulación segura.",riesgo_general
+"Se identificó cableado deteriorado en una máquina energizada en la planta de producción, con acceso libre del personal operativo.",riesgo_electrico
+"Se identificó un cable expuesto junto a un equipo conectado en la planta de producción, sin bloqueo del suministro.",riesgo_electrico
+"Durante la inspección se vio olor a quemado y chispas en un tablero en un área con humedad, con acceso libre del personal operativo.",riesgo_electrico
+"Durante la inspección se vio riesgo de cortocircuito en el tablero de control en un área con humedad, representando riesgo eléctrico para el personal.",riesgo_electrico
+"Se reportó un cable expuesto junto a un equipo conectado en la línea de proceso, mientras el equipo permanecía energizado.",riesgo_electrico
+"Se identificó olor a quemado y chispas en un tablero cerca del laboratorio, con acceso libre del personal operativo.",riesgo_electrico
+"Se reportó un panel eléctrico abierto con conexiones visibles cerca del laboratorio, y posibilidad de descarga eléctrica.",riesgo_electrico
+"Durante la inspección se vio cableado deteriorado en una máquina energizada junto a una zona operativa, representando riesgo eléctrico para el personal.",riesgo_electrico
+"Un técnico encontró un cable expuesto junto a un equipo conectado cerca del laboratorio, sin aislamiento suficiente.",riesgo_electrico
+"El supervisor observó riesgo de cortocircuito en el tablero de control cerca del laboratorio, con acceso libre del personal operativo.",riesgo_electrico
+"Se identificó riesgo de cortocircuito en el tablero de control cerca del laboratorio, con acceso libre del personal operativo.",riesgo_electrico
+"El operario detectó presencia de corriente en una carcasa metálica en la planta de producción, con acceso libre del personal operativo.",riesgo_electrico
+"Se identificó presencia de corriente en una carcasa metálica junto a una zona operativa, y posibilidad de descarga eléctrica.",riesgo_electrico
+"El operario detectó riesgo de cortocircuito en el tablero de control en la planta de producción, representando riesgo eléctrico para el personal.",riesgo_electrico
+"Se identificó un panel eléctrico abierto con conexiones visibles cerca del laboratorio, con acceso libre del personal operativo.",riesgo_electrico
+"El supervisor observó riesgo de cortocircuito en el tablero de control cerca del laboratorio, sin bloqueo del suministro.",riesgo_electrico
+"El supervisor observó olor a quemado y chispas en un tablero en la planta de producción, y posibilidad de descarga eléctrica.",riesgo_electrico
+"Se reportó olor a quemado y chispas en un tablero cerca del laboratorio, mientras el equipo permanecía energizado.",riesgo_electrico
+"El operario detectó un cable expuesto junto a un equipo conectado cerca del laboratorio, representando riesgo eléctrico para el personal.",riesgo_electrico
+"El operario detectó un cable expuesto junto a un equipo conectado cerca del laboratorio, con acceso libre del personal operativo.",riesgo_electrico
+"Se identificó presencia de corriente en una carcasa metálica en un área con humedad, mientras el equipo permanecía energizado.",riesgo_electrico
+"Un técnico encontró riesgo de cortocircuito en el tablero de control cerca del laboratorio, con acceso libre del personal operativo.",riesgo_electrico
+"El supervisor observó un panel eléctrico abierto con conexiones visibles junto a una zona operativa, y posibilidad de descarga eléctrica.",riesgo_electrico
+"El supervisor observó riesgo de cortocircuito en el tablero de control junto a una zona operativa, representando riesgo eléctrico para el personal.",riesgo_electrico

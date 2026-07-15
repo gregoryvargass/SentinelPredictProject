@@ -28,3 +28,19 @@ Thumbs.db
 
 # Build / misc
 *.log
+
+# Modelos y resultados locales
+ml/models/
+ml/outputs/
+
+# Entornos y dependencias
+venv/
+.venv/
+node_modules/
+**/node_modules/
+
+# Builds y base local
+dist/
+**/dist/
+sentinelpredict.db
+*.db

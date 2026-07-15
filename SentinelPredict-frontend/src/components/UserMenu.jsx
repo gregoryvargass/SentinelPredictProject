@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from "react";
+import { Moon, Sun } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "./ConfirmModal";
 import UserAvatar from "./UserAvatar";
 import { getMvpSession, logoutMvpSession } from "../utils/auth";
+import { useTheme } from "../context/ThemeContext";
 
 export default function UserMenu({ onLogoutSuccess }) {
   const [open, setOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const containerRef = useRef(null);
   const navigate = useNavigate();
+  const { isDark, toggleTheme } = useTheme();
 
   const session = getMvpSession();
 
@@ -59,6 +62,11 @@ export default function UserMenu({ onLogoutSuccess }) {
     } else {
       navigate("/login");
     }
+  }
+
+  function handleToggleTheme() {
+    toggleTheme();
+    setOpen(false);
   }
 
   return (
@@ -150,6 +158,23 @@ export default function UserMenu({ onLogoutSuccess }) {
                 <p className="font-medium text-white">Ver perfil</p>
                 <p className="text-xs text-slate-500">
                   Consultar y actualizar datos del usuario
+                </p>
+              </div>
+            </button>
+
+            <button
+              onClick={handleToggleTheme}
+              className="flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-sm text-slate-200 transition hover:bg-slate-800"
+            >
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-800 text-base">
+                {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </span>
+              <div className="text-left">
+                <p className="font-medium text-white">
+                  Cambiar a tema {isDark ? "claro" : "oscuro"}
+                </p>
+                <p className="text-xs text-slate-500">
+                  Guarda la preferencia visual del sistema
                 </p>
               </div>
             </button>

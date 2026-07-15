@@ -1,29 +1,20 @@
-Dataset inicial de clasificación para SentinelPredict
+SentinelPredict Dataset v3 (correctivo)
 
-Archivos:
-- incident_reports_classification_full.csv
-- incident_reports_train.csv
-- incident_reports_val.csv
-- incident_reports_test.csv
+Contenido:
+- incident_reports_corrective_additional.csv: ejemplos nuevos orientados a corregir clases problemáticas
+- incident_reports_classification_full.csv: dataset v2 + ejemplos correctivos v3
+- incident_reports_train.csv: partición de entrenamiento
+- incident_reports_val.csv: partición de validación
+- incident_reports_test.csv: partición de prueba
 
-Columnas:
-- id: identificador interno
-- text: reporte narrativo del incidente
-- label: categoría del incidente
-
-Etiquetas incluidas:
+Objetivo:
+Esta versión refuerza principalmente las clases:
 - riesgo_caida
-- riesgo_quimico
 - riesgo_mecanico
-- riesgo_ergonomico
-- riesgo_electrico
 - riesgo_general
+- riesgo_electrico
 
-Cantidad total:
-- 240 reportes
-- 40 por categoría
-
-Nota:
-Este dataset fue preparado como base inicial para entrenamiento y prueba del MVP.
-Es útil para construir el pipeline de clasificación, pero luego conviene enriquecerlo
-con reportes reales anonimizados y revisión experta del etiquetado.
+Uso recomendado:
+1. Reemplazar los CSV anteriores en ml/data/ por train, val y test de esta carpeta.
+2. Reentrenar el modelo con python ml/training/train_classifier.py
+3. Repetir la evaluación manual con los 20 casos.

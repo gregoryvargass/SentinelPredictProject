@@ -31,12 +31,22 @@ export default function BarChartCard({
               <XAxis dataKey={xKey} stroke="#94a3b8" />
               <YAxis stroke="#94a3b8" />
               <Tooltip
+                cursor={{ fill: "rgba(148, 163, 184, 0.08)" }}
                 contentStyle={{
                   backgroundColor: "#0f172a",
-                  border: "1px solid #334155",
-                  borderRadius: "12px",
+                  border: "1px solid #1e293b",
+                  borderRadius: "16px",
+                  color: "#f8fafc",
+                }}
+                labelStyle={{
+                  color: "#f8fafc",
+                  fontWeight: 600,
+                }}
+                itemStyle={{
                   color: "#e2e8f0",
                 }}
+                // eslint-disable-next-line no-unused-vars
+                formatter={(value, name) => [value, "Cantidad"]}
               />
               <Bar
                 dataKey={dataKey}

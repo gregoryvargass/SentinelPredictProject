@@ -1,37 +1,96 @@
-﻿id,text,label
-223,"En el área de recepción de materiales, el responsable de seguridad documentó la novedad debido a desorden en el área de trabajo durante la inspección diaria. El evento fue comunicado al encargado de seguridad.",riesgo_general
-116,"El supervisor informó que en banda transportadora se presentó un evento por contacto con parte móvil; además, el operario sufrió una contusión mientras se retiraba material atascado.",riesgo_mecanico
-184,"En el área de tablero eléctrico, hubo olor a cable recalentado debido a conexión improvisada durante una revisión del sistema. El evento fue comunicado al encargado de seguridad.",riesgo_electrico
-204,"En el área de almacén, se detectó incumplimiento de normas básicas debido a material mal almacenado al comienzo del turno.",riesgo_general
-91,"Durante labores en producción, se reportó corte superficial por golpe con herramienta en plena operación de la línea. El evento fue comunicado al encargado de seguridad. Se recomendó aplicar una medida correctiva inmediata.",riesgo_mecanico
-236,"Mientras el personal trabajaba en producción, el responsable de seguridad documentó la novedad a causa de obstrucción del pasillo en recorrido del supervisor. El evento fue comunicado al encargado de seguridad. Se recomendó aplicar una medida correctiva inmediata.",riesgo_general
-153,Se reportó que en despacho ocurrió un incidente relacionado con movimientos repetitivos; se observó incomodidad postural durante el armado de pedidos.,riesgo_ergonomico
-84,"Durante labores en línea de ensamblaje, hubo pellizco entre componentes por guardas de seguridad levantadas mientras se retiraba material atascado.",riesgo_mecanico
-64,"Mientras el personal trabajaba en laboratorio, se reportó irritación ocular a causa de salpicadura de químico corrosivo en el cambio de turno. El evento fue comunicado al encargado de seguridad.",riesgo_quimico
-103,Se reportó que en taller ocurrió un incidente relacionado con uso de equipo sin bloqueo; se produjo un golpe en la mano al reiniciar la máquina. El evento fue comunicado al encargado de seguridad.,riesgo_mecanico
-73,"En el área de mezclado, se reportó irritación ocular debido a emanación de vapores durante la reposición de insumos.",riesgo_quimico
-211,Se reportó que en pasillo principal ocurrió un incidente relacionado con obstrucción del pasillo; el supervisor levantó una observación preventiva en revisión de seguridad.,riesgo_general
-4,Se reportó que en zona de carga ocurrió un incidente relacionado con pasillo mojado; se deslizó cerca del área de lavado durante el turno matutino. Se recomendó aplicar una medida correctiva inmediata.,riesgo_caida
-11,"En el área de mantenimiento, tropezó con material mal colocado debido a humedad acumulada mientras realizaba una ronda de supervisión. Se recomendó aplicar una medida correctiva inmediata.",riesgo_caida
-183,"El supervisor informó que en área de máquinas se presentó un evento por enchufe en mal estado; además, se reportó chispa al energizar el equipo en una inspección de rutina. Se recomendó aplicar una medida correctiva inmediata.",riesgo_electrico
-113,"En el área de banda transportadora, la pieza salió expulsada debido a manipulación insegura de maquinaria durante el mantenimiento correctivo. Se recomendó aplicar una medida correctiva inmediata.",riesgo_mecanico
-156,"El supervisor informó que en empaque se presentó un evento por estación de trabajo mal ajustada; además, la trabajadora presentó fatiga muscular mientras se apilaban materiales. El evento fue comunicado al encargado de seguridad.",riesgo_ergonomico
-23,"Mientras el personal trabajaba en producción, se deslizó cerca del área de lavado a causa de restos de aceite en el suelo durante labores de limpieza. El evento fue comunicado al encargado de seguridad.",riesgo_caida
-63,"En el área de área de limpieza, se reportó irritación ocular debido a envase mal sellado mientras se manipulaba un bidón.",riesgo_quimico
-36,"En el área de zona de carga, se deslizó cerca del área de lavado debido a superficie resbalosa durante el turno matutino.",riesgo_caida
-164,"El supervisor informó que en infraestructura se presentó un evento por aislamiento deteriorado; además, el técnico recibió una descarga leve en una inspección de rutina.",riesgo_electrico
-24,"Durante labores en logística, resbaló mientras caminaba por charco junto a la máquina mientras realizaba una ronda de supervisión. Se recomendó aplicar una medida correctiva inmediata.",riesgo_caida
-233,Se reportó que en pasillo principal ocurrió un incidente relacionado con material mal almacenado; fue necesario intervenir de inmediato en recorrido del supervisor.,riesgo_general
-33,"Durante labores en zona de carga, cayó al intentar mover una caja por escalera sin cinta antideslizante al inicio del turno nocturno. El evento fue comunicado al encargado de seguridad.",riesgo_caida
-224,"El supervisor informó que en pasillo principal se presentó un evento por uso inadecuado de equipo de protección personal; además, se detectó incumplimiento de normas básicas en recorrido del supervisor. El evento fue comunicado al encargado de seguridad.",riesgo_general
-143,"El supervisor informó que en almacén se presentó un evento por transporte manual sin ayuda mecánica; además, se reportó molestia en hombros y cuello en una jornada con alta demanda.",riesgo_ergonomico
-193,"Mientras el personal trabajaba en mantenimiento, el técnico recibió una descarga leve a causa de enchufe en mal estado al conectar un equipo portátil.",riesgo_electrico
-51,"Mientras el personal trabajaba en línea de pintura, hubo contacto del producto con la piel a causa de derrame de solvente durante la preparación de materiales.",riesgo_quimico
-131,"Mientras el personal trabajaba en almacén, hubo que detener la tarea por cansancio físico a causa de postura forzada prolongada al final del turno. El evento fue comunicado al encargado de seguridad. Se recomendó aplicar una medida correctiva inmediata.",riesgo_ergonomico
-124,"Durante labores en despacho, el operario reportó dolor lumbar por transporte manual sin ayuda mecánica en una jornada con alta demanda. El evento fue comunicado al encargado de seguridad.",riesgo_ergonomico
-196,"Durante labores en infraestructura, el técnico recibió una descarga leve por extensión sobrecargada en una inspección de rutina.",riesgo_electrico
-44,"Mientras el personal trabajaba en área de limpieza, hubo contacto del producto con la piel a causa de mezcla incorrecta de reactivos mientras se realizaba una limpieza profunda.",riesgo_quimico
-144,Se reportó que en despacho ocurrió un incidente relacionado con movimientos repetitivos; el operario reportó dolor lumbar durante actividades repetitivas.,riesgo_ergonomico
-76,"El supervisor informó que en laboratorio se presentó un evento por salpicadura de químico corrosivo; además, el personal evacuó el área durante la preparación de materiales.",riesgo_quimico
-104,"Durante labores en banda transportadora, el trabajador quedó atrapado parcialmente por contacto con parte móvil durante una inspección preventiva. El evento fue comunicado al encargado de seguridad.",riesgo_mecanico
-171,"Mientras el personal trabajaba en cuarto técnico, hubo olor a cable recalentado a causa de conexión improvisada durante la limpieza del área.",riesgo_electrico
+text,label
+el equipo podía causar corte o golpe en mantenimiento.,riesgo_mecanico
+un técnico se deslizó al caminar cerca del almacén por charcos cerca del drenaje durante el turno.,riesgo_caida
+la trabajadora se fue de lado al pisar la mancha en el área de carga por agua acumulada durante el turno.,riesgo_caida
+la auxiliar mantuvo postura forzada durante horas en la estación de empaque con riesgo ergonómico acumulado.,riesgo_ergonomico
+el torno tenía resguardo retirado durante limpieza del equipo.,riesgo_mecanico
+Se observó caja eléctrica abierta al lado del compresor con posibilidad de cortocircuito durante la inspección.,riesgo_electrico
+"Se identificó cableado deteriorado en una máquina energizada en la planta de producción, con acceso libre del personal operativo.",riesgo_electrico
+Se observó tablero sin tapa en la línea 2 sin bloqueo ni etiquetado durante la inspección.,riesgo_electrico
+Se observó caja eléctrica abierta en la línea 2 sin bloqueo ni etiquetado durante la inspección.,riesgo_electrico
+Hubo derrame de sustancia corrosiva con riesgo de contacto en la zona de preparación.,riesgo_quimico
+el ayudante sufrió una caída al mismo nivel en la bodega por charcos cerca del drenaje durante el turno.,riesgo_caida
+La operaria se lesionó con un mecanismo en movimiento por ausencia de guarda de seguridad en el área de mantenimiento.,riesgo_mecanico
+la máquina podía causar corte o golpe al iniciar el turno.,riesgo_mecanico
+Un ayudante recibió un golpe al manipular una herramienta industrial por exposición a partes móviles en producción.,riesgo_mecanico
+el montacargas funcionaba sin bloqueo de seguridad en la línea de producción.,riesgo_mecanico
+Se observó aislamiento dañado cerca de una zona húmeda sin bloqueo ni etiquetado durante la inspección.,riesgo_electrico
+se reportó mala señalización en el área de empaque sin un peligro específico identificado.,riesgo_general
+el empleado sostuvo herramientas pesadas por tiempo prolongado en la mesa de ensamblaje generando sobreesfuerzo físico.,riesgo_ergonomico
+el operador encontró envase con sustancia inflamable abierto en el cuarto de sustancias afectando la seguridad del personal.,riesgo_quimico
+el equipo funcionaba sin bloqueo de seguridad durante la operación.,riesgo_mecanico
+el visitante se deslizó al caminar cerca del almacén por charcos cerca del drenaje durante el turno.,riesgo_caida
+se reportó salpicadura de sustancia peligrosa junto al área de limpieza que podía causar quemaduras.,riesgo_quimico
+se reportó herramientas fuera de lugar en producción con incumplimiento de normas básicas.,riesgo_general
+Se observó movimiento repetitivo de muñeca y hombro durante el empaquetado continuo.,riesgo_ergonomico
+Se observó tablero sin tapa en el cuarto eléctrico que podía provocar electrocución durante la inspección.,riesgo_electrico
+Se observó tablero sin tapa al lado del compresor con riesgo de descarga durante la inspección.,riesgo_electrico
+el almacenista sostuvo herramientas pesadas por tiempo prolongado en la mesa de ensamblaje ocasionando incomodidad postural.,riesgo_ergonomico
+el ayudante cayó mientras trasladaba material en la rampa de acceso por falta de cinta antideslizante durante el turno.,riesgo_caida
+El técnico se lesionó con un mecanismo en movimiento por ausencia de guarda de seguridad junto a la prensa.,riesgo_mecanico
+la operaria realizó movimientos repetitivos de hombro durante la carga del camión con riesgo ergonómico acumulado.,riesgo_ergonomico
+el supervisor identificó salpicadura de sustancia peligrosa junto al área de limpieza con riesgo de inhalación y contacto.,riesgo_quimico
+el montacarguista se deslizó al caminar cerca del almacén por falta de cinta antideslizante durante el turno.,riesgo_caida
+"Se registró mala señalización en el pasillo de circulación en la zona de carga, afectando el tránsito normal del área.",riesgo_general
+la auxiliar sostuvo herramientas pesadas por tiempo prolongado en la mesa de ensamblaje ocasionando incomodidad postural.,riesgo_ergonomico
+el supervisor identificó recipiente mal cerrado con reactivo en el laboratorio requiriendo contención inmediata.,riesgo_quimico
+el almacenista realizó movimientos repetitivos de hombro durante la carga del camión generando sobreesfuerzo físico.,riesgo_ergonomico
+se observó herramientas fuera de lugar en la zona de despacho sin un peligro específico identificado.,riesgo_general
+El operario tuvo contacto con una pieza móvil mientras ajustaba la maquinaria en la línea de empaque.,riesgo_mecanico
+el almacenista giró el tronco repetidas veces al acomodar piezas durante la carga del camión generando sobreesfuerzo físico.,riesgo_ergonomico
+Se observó conductor pelado en el cuarto eléctrico con riesgo de descarga durante la inspección.,riesgo_electrico
+el operador mostraba riesgo de atrapamiento en el área de corte.,riesgo_mecanico
+Se observó cable expuesto en el cuarto eléctrico cerca de humedad acumulada durante la inspección.,riesgo_electrico
+un colaborador levantó cajas pesadas repetidamente en la estación de empaque y terminó con dolor en muñeca.,riesgo_ergonomico
+durante la inspección se detectó obstrucción de pasillos en el taller sin un peligro específico identificado.,riesgo_general
+durante la inspección se observó fuga de químico corrosivo en producción con exposición a vapores.,riesgo_quimico
+Se observó conductor pelado en la línea 2 con posibilidad de cortocircuito durante la inspección.,riesgo_electrico
+la trabajadora se deslizó al caminar en la rampa de acceso por charcos cerca del drenaje durante el turno.,riesgo_caida
+durante la inspección se detectó residuos acumulados en el pasillo principal sin un peligro específico identificado.,riesgo_general
+Se observó enchufe recalentado junto a la máquina de corte cerca de humedad acumulada durante la inspección.,riesgo_electrico
+el equipo tenía punto de pellizco expuesto en la línea de producción.,riesgo_mecanico
+Se observó tomacorriente chispeando en el cuarto eléctrico con riesgo de descarga durante la inspección.,riesgo_electrico
+el ayudante se deslizó al caminar en el pasillo de producción por agua acumulada durante el turno.,riesgo_caida
+Una mezcla química estaba almacenada sin etiqueta y con posibilidad de exposición.,riesgo_quimico
+la operaria empujó carga manual sin ayuda durante la carga del camión generando sobreesfuerzo físico.,riesgo_ergonomico
+El operario tropezó y sufrió una caída leve debido a piso resbaloso cerca del despacho cerca del muelle mientras movilizaba materiales.,riesgo_caida
+el operador mostraba riesgo de atrapamiento durante limpieza del equipo.,riesgo_mecanico
+El operario tropezó en el pasillo y cayó por una mancha de lubricante en el pasillo cerca del muelle mientras movilizaba materiales.,riesgo_caida
+el supervisor informó material apilado incorrectamente en producción sin un peligro específico identificado.,riesgo_general
+un técnico casi cae al pasar por el área cerca del almacén por una superficie resbaladiza durante el turno.,riesgo_caida
+"Se registró desorden general y materiales fuera de lugar en la zona de despacho, lo que dificulta la circulación segura.",riesgo_general
+se reportó mala señalización en el área de empaque requiriendo corrección inmediata.,riesgo_general
+el colaborador perdió el equilibrio y cayó en la bodega por agua acumulada durante el turno.,riesgo_caida
+durante la inspección se observó almacenamiento inadecuado de químicos en el laboratorio que podía causar quemaduras.,riesgo_quimico
+Se observó caja eléctrica abierta en la línea 2 con peligro de contacto directo durante la inspección.,riesgo_electrico
+el operador encontró mezcla química sin etiquetado en el laboratorio con exposición a vapores.,riesgo_quimico
+durante la inspección se detectó obstrucción de pasillos en el área de empaque con riesgo operacional general.,riesgo_general
+el torno funcionaba sin bloqueo de seguridad en mantenimiento.,riesgo_mecanico
+Se observó aislamiento dañado en la línea 2 sin bloqueo ni etiquetado durante la inspección.,riesgo_electrico
+la supervisora tropezó y se golpeó la rodilla en la zona de empaque por una superficie resbaladiza durante el turno.,riesgo_caida
+se reportó herramientas fuera de lugar en el área de empaque con incumplimiento de normas básicas.,riesgo_general
+el operador encontró almacenamiento inadecuado de químicos en el almacén que podía causar quemaduras.,riesgo_quimico
+la cortadora atrapó la mano del operario al iniciar el turno.,riesgo_mecanico
+durante la inspección se observó fuga de químico corrosivo en el laboratorio que podía causar quemaduras.,riesgo_quimico
+"Se identificó desorden general y materiales fuera de lugar en la zona de carga, generando una condición insegura para el personal.",riesgo_general
+El supervisor reportó salpicadura de sustancia peligrosa durante el trasvase.,riesgo_quimico
+El supervisor tropezó en el pasillo y cayó debido a piso resbaloso cerca del despacho en el almacén mientras movilizaba materiales.,riesgo_caida
+la operaria trabajó encorvado frente a la mesa en la mesa de ensamblaje con riesgo ergonómico acumulado.,riesgo_ergonomico
+Se reportó caída desde una escalera portátil por apoyo inestable y peldaños húmedos.,riesgo_caida
+durante la inspección se observó fuga de químico corrosivo cerca del tanque con posibilidad de intoxicación.,riesgo_quimico
+"El supervisor reportó objetos mal distribuidos en el almacén en la ruta de evacuación, afectando el tránsito normal del área.",riesgo_general
+el operador encontró olor fuerte a producto químico en el laboratorio con exposición a vapores.,riesgo_quimico
+"Durante la inspección se detectó equipos y cajas bloqueando la ruta peatonal en la ruta de evacuación, aumentando el riesgo operativo general.",riesgo_general
+Se observó cable expuesto junto a la máquina de corte cerca de humedad acumulada durante la inspección.,riesgo_electrico
+"Durante la inspección se detectó equipos y cajas bloqueando la ruta peatonal en la zona de despacho, aumentando el riesgo operativo general.",riesgo_general
+El trabajador se lesionó con un mecanismo en movimiento al intervenir la máquina sin bloqueo previo en el taller.,riesgo_mecanico
+Se observó tomacorriente chispeando cerca de una zona húmeda que podía provocar electrocución durante la inspección.,riesgo_electrico
+la operaria empujó carga manual sin ayuda en la estación de empaque y reportó molestia en la espalda.,riesgo_ergonomico
+el supervisor informó residuos acumulados en el área de empaque con incumplimiento de normas básicas.,riesgo_general
+la operaria giró el tronco repetidas veces al acomodar piezas en el almacén ocasionando incomodidad postural.,riesgo_ergonomico
+La inspección evidenció falta de orden y limpieza sin un peligro específico dominante.,riesgo_general
+El operario tropezó y sufrió una caída leve por una mancha de lubricante en el pasillo en la zona de despacho mientras movilizaba materiales.,riesgo_caida
+"Un técnico encontró un cable expuesto junto a un equipo conectado cerca del laboratorio, sin aislamiento suficiente.",riesgo_electrico
+Se observó riesgo de atrapamiento en banda transportadora sin guarda de protección.,riesgo_mecanico
+el equipo tenía resguardo retirado durante limpieza del equipo.,riesgo_mecanico
+la supervisora cayó mientras trasladaba material junto a la línea de ensamblaje por agua acumulada durante el turno.,riesgo_caida

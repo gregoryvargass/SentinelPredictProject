@@ -1,0 +1,18 @@
+{
+  "total_rows_full": 636,
+  "total_rows_additional": 96,
+  "distribution_full": {
+    "riesgo_caida": 114,
+    "riesgo_electrico": 114,
+    "riesgo_ergonomico": 90,
+    "riesgo_general": 114,
+    "riesgo_mecanico": 114,
+    "riesgo_quimico": 90
+  },
+  "distribution_additional": {
+    "riesgo_caida": 24,
+    "riesgo_electrico": 24,
+    "riesgo_general": 24,
+    "riesgo_mecanico": 24
+  }
+}

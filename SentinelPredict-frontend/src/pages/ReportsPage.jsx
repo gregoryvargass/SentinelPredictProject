@@ -4,8 +4,38 @@ import { formatStatusLabel, getStatusBadgeClass } from "../utils/formatters";
 import { exportReportsToCsv } from "../utils/csv";
 import ReportsTableSkeleton from "../components/ReportsTableSkeleton";
 import EmptyState from "../components/EmptyState";
+import { CalendarDays } from "lucide-react";
 
 const ITEMS_PER_PAGE = 5;
+
+function getVisiblePages(currentPage, totalPages) {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  const pages = [];
+
+  pages.push(1);
+
+  const start = Math.max(2, currentPage - 1);
+  const end = Math.min(totalPages - 1, currentPage + 1);
+
+  if (start > 2) {
+    pages.push("left-ellipsis");
+  }
+
+  for (let page = start; page <= end; page += 1) {
+    pages.push(page);
+  }
+
+  if (end < totalPages - 1) {
+    pages.push("right-ellipsis");
+  }
+
+  pages.push(totalPages);
+
+  return pages;
+}
 
 export default function ReportsPage({
   onSelectReport,
@@ -39,6 +69,7 @@ export default function ReportsPage({
         setLoading(true);
         const data = await getReports();
         setReports(data);
+        setError("");
       } catch (err) {
         setError(err.message || "Ocurrió un error cargando los reportes");
       } finally {
@@ -156,6 +187,10 @@ export default function ReportsPage({
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     return filteredReports.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [filteredReports, currentPage]);
+
+  const visiblePages = useMemo(() => {
+    return getVisiblePages(currentPage, totalPages);
+  }, [currentPage, totalPages]);
 
   const processedCount = filteredReports.filter(
     (report) => report.status === "processed"
@@ -350,28 +385,34 @@ export default function ReportsPage({
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_0.9fr]">
-          <div className="space-y-2">
-            <label className="text-sm text-slate-300">Fecha desde</label>
+                  <div className="space-y-2">
+          <label className="text-sm text-slate-300">Fecha desde</label>
+          <div className="relative">
             <input
               type="date"
               value={startDateFilter}
               onChange={(event) =>
                 updateFilter("startDateFilter", event.target.value)
               }
-              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
+              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-slate-100 outline-none focus:border-slate-500"
             />
+            <CalendarDays className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
           </div>
+        </div>
 
-          <div className="space-y-2">
+         <div className="space-y-2">
             <label className="text-sm text-slate-300">Fecha hasta</label>
-            <input
-              type="date"
-              value={endDateFilter}
-              onChange={(event) =>
-                updateFilter("endDateFilter", event.target.value)
-              }
-              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
-            />
+            <div className="relative">
+              <input
+                type="date"
+                value={endDateFilter}
+                onChange={(event) =>
+                  updateFilter("endDateFilter", event.target.value)
+                }
+                className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-slate-100 outline-none focus:border-slate-500"
+              />
+              <CalendarDays className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
+            </div>
           </div>
 
           <div className="flex items-end">
@@ -496,7 +537,7 @@ export default function ReportsPage({
             de <span className="font-semibold text-white">{totalPages}</span>
           </p>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => goToPage(currentPage - 1)}
               disabled={currentPage === 1}
@@ -505,12 +546,12 @@ export default function ReportsPage({
               Anterior
             </button>
 
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-              (page) => (
+            {visiblePages.map((page, index) =>
+              typeof page === "number" ? (
                 <button
                   key={page}
                   onClick={() => goToPage(page)}
-                  className={`rounded-2xl px-4 py-2 text-sm font-medium transition ${
+                  className={`min-w-[42px] rounded-2xl px-4 py-2 text-sm font-medium transition ${
                     currentPage === page
                       ? "bg-white text-slate-950"
                       : "border border-slate-700 bg-slate-950 text-slate-200 hover:bg-slate-800"
@@ -518,6 +559,13 @@ export default function ReportsPage({
                 >
                   {page}
                 </button>
+              ) : (
+                <span
+                  key={`${page}-${index}`}
+                  className="px-2 text-sm font-semibold text-slate-500"
+                >
+                  ...
+                </span>
               )
             )}
 

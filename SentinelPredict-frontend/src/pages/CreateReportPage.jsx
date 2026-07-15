@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createReport } from "../services/api";
+import { CalendarDays } from "lucide-react";
 
 export default function CreateReportPage({ onReportCreated, onActionError }) {
   const [formData, setFormData] = useState({
@@ -140,15 +141,18 @@ export default function CreateReportPage({ onReportCreated, onActionError }) {
               />
             </div>
 
-            <div className="space-y-2 md:col-span-2">
+            <div className="space-y-2">
               <label className="text-sm text-slate-300">Fecha del incidente</label>
-              <input
-                type="datetime-local"
-                name="incident_date"
-                value={formData.incident_date}
-                onChange={handleChange}
-                className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
-              />
+              <div className="relative">
+                <input
+                  type="datetime-local"
+                  name="incident_date"
+                  value={formData.incident_date}
+                  onChange={handleChange}
+                  className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-slate-100 outline-none focus:border-slate-500"
+                />
+                <CalendarDays className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
+              </div>
             </div>
           </div>
 

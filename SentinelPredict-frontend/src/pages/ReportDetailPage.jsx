@@ -1,6 +1,11 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getReportFull, processReport, deleteReport } from "../services/api";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  getReportFull,
+  processReport,
+  deleteReport,
+  getReports,
+} from "../services/api";
 import ReportDetailSkeleton from "../components/ReportDetailSkeleton";
 import EmptyState from "../components/EmptyState";
 import ConfirmModal from "../components/ConfirmModal";
@@ -11,6 +16,59 @@ import {
   getRecommendationByClassification,
 } from "../utils/formatters";
 
+function getConfidenceMeta(confidence = 0, requiresReview = false) {
+  const percentage = Math.round(confidence * 100);
+
+  if (requiresReview) {
+    return {
+      label: "Requiere revisión",
+      description:
+        "La predicción fue generada por el modelo, pero conviene validarla manualmente antes de tomar decisiones.",
+      badgeClass:
+        "border border-amber-700/50 bg-amber-500/10 text-amber-300",
+      valueClass: "text-amber-300",
+      percentage,
+    };
+  }
+
+  if (confidence >= 0.8) {
+    return {
+      label: "Alta confianza",
+      description:
+        "La predicción presenta un nivel alto de seguridad dentro del modelo actual.",
+      badgeClass:
+        "border border-emerald-700/50 bg-emerald-500/10 text-emerald-300",
+      valueClass: "text-emerald-300",
+      percentage,
+    };
+  }
+
+  if (confidence >= 0.6) {
+    return {
+      label: "Confianza media",
+      description:
+        "La predicción es utilizable, aunque puede beneficiarse de revisión contextual.",
+      badgeClass:
+        "border border-yellow-700/50 bg-yellow-500/10 text-yellow-300",
+      valueClass: "text-yellow-300",
+      percentage,
+    };
+  }
+
+  return {
+    label: "Baja confianza",
+    description:
+      "La predicción tiene un nivel bajo de seguridad y debe revisarse manualmente.",
+    badgeClass: "border border-red-700/50 bg-red-500/10 text-red-300",
+    valueClass: "text-red-300",
+    percentage,
+  };
+}
+
+function buildReportPath(pathname, targetId) {
+  return pathname.replace(/\/\d+$/, `/${targetId}`);
+}
+
 export default function ReportDetailPage({
   onReportProcessed,
   onEditReport,
@@ -20,7 +78,11 @@ export default function ReportDetailPage({
   const { id } = useParams();
   const reportId = id;
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [report, setReport] = useState(null);
+  const [reportsIndex, setReportsIndex] = useState([]);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -45,12 +107,23 @@ export default function ReportDetailPage({
     }
   }
 
+  async function loadReportsIndex() {
+    try {
+      const data = await getReports();
+      const sortedReports = [...data].sort((a, b) => a.id - b.id);
+      setReportsIndex(sortedReports);
+    } catch (err) {
+      console.error("No se pudo cargar el índice de reportes", err);
+    }
+  }
+
   useEffect(() => {
     if (reportId) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       loadReport();
+      loadReportsIndex();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reportId]);
 
   async function handleProcessReport() {
@@ -95,6 +168,28 @@ export default function ReportDetailPage({
     }
   }
 
+  const currentIndex = useMemo(() => {
+    if (!reportId || reportsIndex.length === 0) return -1;
+    return reportsIndex.findIndex((item) => String(item.id) === String(reportId));
+  }, [reportsIndex, reportId]);
+
+  const previousReport = useMemo(() => {
+    if (currentIndex <= 0) return null;
+    return reportsIndex[currentIndex - 1];
+  }, [reportsIndex, currentIndex]);
+
+  const nextReport = useMemo(() => {
+    if (currentIndex === -1 || currentIndex >= reportsIndex.length - 1) return null;
+    return reportsIndex[currentIndex + 1];
+  }, [reportsIndex, currentIndex]);
+
+  function goToReport(targetReportId) {
+    if (!targetReportId) return;
+    const targetPath = buildReportPath(location.pathname, targetReportId);
+    navigate(targetPath);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   if (!reportId) {
     return (
       <EmptyState
@@ -122,6 +217,13 @@ export default function ReportDetailPage({
     ? getRecommendationByClassification(classificationLabel)
     : null;
 
+  const confidenceMeta = report.classification
+    ? getConfidenceMeta(
+        report.classification.confidence,
+        report.classification.requires_review
+      )
+    : null;
+
   return (
     <>
       <ConfirmModal
@@ -146,6 +248,22 @@ export default function ReportDetailPage({
           </div>
 
           <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => goToReport(previousReport?.id)}
+              disabled={!previousReport}
+              className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-100 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              ← Anterior
+            </button>
+
+            <button
+              onClick={() => goToReport(nextReport?.id)}
+              disabled={!nextReport}
+              className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-100 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Siguiente →
+            </button>
+
             <button
               onClick={() => onEditReport && onEditReport(report.id)}
               className="rounded-lg border border-slate-700 bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-100 hover:bg-slate-800"
@@ -231,24 +349,64 @@ export default function ReportDetailPage({
             {report.classification ? (
               <div className="mt-4 space-y-4">
                 <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
-                  <p className="text-sm text-slate-400">Tipo identificado</p>
-                  <p className="mt-2 text-2xl font-semibold text-white">
-                    {report.classification.label}
-                  </p>
+                  <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                    <div>
+                      <p className="text-sm text-slate-400">Tipo identificado</p>
+                      <p className="mt-2 text-2xl font-semibold text-white">
+                        {report.classification.label}
+                      </p>
+                    </div>
+
+                    {confidenceMeta && (
+                      <span
+                        className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${confidenceMeta.badgeClass}`}
+                      >
+                        {confidenceMeta.label}
+                      </span>
+                    )}
+                  </div>
+
+                  {confidenceMeta && (
+                    <p className="mt-4 text-sm leading-6 text-slate-300">
+                      {confidenceMeta.description}
+                    </p>
+                  )}
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
                     <p className="text-sm text-slate-400">Confianza</p>
-                    <p className="mt-2 text-lg font-semibold text-white">
+                    <p
+                      className={`mt-2 text-lg font-semibold ${
+                        confidenceMeta?.valueClass || "text-white"
+                      }`}
+                    >
                       {(report.classification.confidence * 100).toFixed(0)}%
                     </p>
                   </div>
 
                   <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
                     <p className="text-sm text-slate-400">Modelo</p>
-                    <p className="mt-2 text-sm font-medium text-slate-200">
+                    <p className="mt-2 text-sm font-medium break-words text-slate-200">
                       {report.classification.model_name}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
+                    <p className="text-sm text-slate-400">Etiqueta técnica</p>
+                    <p className="mt-2 text-sm font-medium text-slate-200">
+                      {report.classification.raw_label || "N/A"}
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
+                    <p className="text-sm text-slate-400">Validación</p>
+                    <p className="mt-2 text-sm font-medium text-slate-200">
+                      {report.classification.requires_review
+                        ? "Revisión manual recomendada"
+                        : "Predicción aceptada por el sistema"}
                     </p>
                   </div>
                 </div>
@@ -274,7 +432,7 @@ export default function ReportDetailPage({
 
                 <div className="rounded-xl border border-slate-800 bg-slate-950 p-4">
                   <p className="text-sm text-slate-400">Modelo utilizado</p>
-                  <p className="mt-2 text-sm font-medium text-slate-200">
+                  <p className="mt-2 text-sm font-medium break-words text-slate-200">
                     {report.summary.model_name}
                   </p>
                 </div>

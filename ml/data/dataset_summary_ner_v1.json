@@ -1,0 +1,14 @@
+{
+  "total": 110,
+  "train": 88,
+  "val": 11,
+  "test": 11,
+  "labels": [
+    "PERSONA",
+    "AREA",
+    "EQUIPO",
+    "CONDICION",
+    "SUSTANCIA",
+    "EVENTO"
+  ]
+}

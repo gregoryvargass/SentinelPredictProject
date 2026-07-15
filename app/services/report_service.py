@@ -39,7 +39,7 @@ class ReportService:
         self.db.refresh(new_report)
 
         return new_report
-    
+
     def update_report(self, report_id: int, report_data: ReportUpdate):
         report = self.db.query(Report).filter(Report.id == report_id).first()
 
@@ -71,9 +71,21 @@ class ReportService:
             }
 
         try:
-            existing_classification = self.db.query(Classification).filter(Classification.report_id == report_id).first()
-            existing_summary = self.db.query(Summary).filter(Summary.report_id == report_id).first()
-            existing_entities = self.db.query(Entity).filter(Entity.report_id == report_id).all()
+            existing_classification = (
+                self.db.query(Classification)
+                .filter(Classification.report_id == report_id)
+                .first()
+            )
+            existing_summary = (
+                self.db.query(Summary)
+                .filter(Summary.report_id == report_id)
+                .first()
+            )
+            existing_entities = (
+                self.db.query(Entity)
+                .filter(Entity.report_id == report_id)
+                .all()
+            )
 
             if existing_classification or existing_summary or existing_entities:
                 report.status = "processed"
@@ -88,12 +100,18 @@ class ReportService:
 
             classification_result = self.nlp_service.classify_report(report.description)
             entities_result = self.nlp_service.extract_entities(report.description)
-            summary_result = self.nlp_service.summarize_report(report.description)
+            summary_result = self.nlp_service.build_hybrid_summary(
+                report.description,
+                classification_result,
+                entities_result
+            )
 
             classification = Classification(
                 report_id=report.id,
                 label=classification_result["label"],
+                raw_label=classification_result["raw_label"],
                 confidence=classification_result["confidence"],
+                requires_review=classification_result["requires_review"],
                 model_name=classification_result["model_name"]
             )
 
@@ -133,11 +151,14 @@ class ReportService:
             self.db.commit()
             raise HTTPException(status_code=400, detail=str(e))
 
-        except Exception:
+        except Exception as e:
             report.status = "failed"
             self.db.commit()
-            raise HTTPException(status_code=500, detail="Ocurrió un error inesperado durante el procesamiento")
-    
+            raise HTTPException(
+                status_code=500,
+                detail=f"Ocurrió un error inesperado durante el procesamiento: {str(e)}"
+            )
+
     def get_full_report_by_id(self, report_id: int):
         report = self.db.query(Report).filter(Report.id == report_id).first()
 
@@ -145,23 +166,35 @@ class ReportService:
             raise HTTPException(status_code=404, detail="Reporte no encontrado")
 
         return report
-    
+
     def get_processing_results(self, report_id: int):
         report = self.db.query(Report).filter(Report.id == report_id).first()
 
         if not report:
             raise HTTPException(status_code=404, detail="Reporte no encontrado")
 
-        classification = self.db.query(Classification).filter(Classification.report_id == report_id).first()
-        entities = self.db.query(Entity).filter(Entity.report_id == report_id).all()
-        summary = self.db.query(Summary).filter(Summary.report_id == report_id).first()
+        classification = (
+            self.db.query(Classification)
+            .filter(Classification.report_id == report_id)
+            .first()
+        )
+        entities = (
+            self.db.query(Entity)
+            .filter(Entity.report_id == report_id)
+            .all()
+        )
+        summary = (
+            self.db.query(Summary)
+            .filter(Summary.report_id == report_id)
+            .first()
+        )
 
         return {
             "classification": classification,
             "entities": entities,
             "summary": summary
         }
-    
+
     def delete_report(self, report_id: int):
         report = self.db.query(Report).filter(Report.id == report_id).first()
 
