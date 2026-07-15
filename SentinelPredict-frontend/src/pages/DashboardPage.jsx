@@ -308,7 +308,7 @@ export default function DashboardPage({ onDrillDown }) {
             <p className="text-sm uppercase tracking-[0.2em] text-slate-400">
               SentinelPredict
             </p>
-            <h2 className="mt-3 text-4xl font-bold tracking-tight text-white">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Dashboard de análisis de incidentes industriales
             </h2>
             <p className="mt-4 max-w-2xl leading-7 text-slate-300">
@@ -339,48 +339,56 @@ export default function DashboardPage({ onDrillDown }) {
         </div>
       </section>
 
-      <section className="space-y-4 rounded-2xl border border-slate-800 bg-slate-900 p-5">
-        <div>
-          <p className="text-sm text-slate-400">Filtro temporal del dashboard</p>
+      <section className="w-full min-w-0 max-w-full space-y-4 overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 p-5">
+        <div className="min-w-0">
+          <p className="text-sm text-slate-400">
+            Filtro temporal del dashboard
+          </p>
+
           <p className="mt-1 text-slate-300">
             Selecciona un rango de fechas para analizar incidentes dentro de ese
             período.
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
-          <div className="space-y-2">
+        <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="min-w-0 space-y-2">
             <label className="text-sm text-slate-300">Fecha desde</label>
-            <div className="relative">
+
+            <div className="relative min-w-0 max-w-full overflow-hidden">
               <input
                 type="date"
                 name="startDate"
                 value={filters.startDate}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-slate-100 outline-none focus:border-slate-500"
+                className="block w-full min-w-0 max-w-full appearance-none rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-base text-slate-100 outline-none focus:border-slate-500"
               />
+
               <CalendarDays className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="min-w-0 space-y-2">
             <label className="text-sm text-slate-300">Fecha hasta</label>
-            <div className="relative">
+
+            <div className="relative min-w-0 max-w-full overflow-hidden">
               <input
                 type="date"
                 name="endDate"
                 value={filters.endDate}
                 onChange={handleChange}
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-slate-100 outline-none focus:border-slate-500"
+                className="block w-full min-w-0 max-w-full appearance-none rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-base text-slate-100 outline-none focus:border-slate-500"
               />
+
               <CalendarDays className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
             </div>
           </div>
 
-          <div className="flex items-end">
+          <div className="flex min-w-0 items-end">
             <button
+              type="button"
               onClick={clearFilters}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
+              className="w-full min-w-0 max-w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
             >
               Limpiar filtro temporal
             </button>

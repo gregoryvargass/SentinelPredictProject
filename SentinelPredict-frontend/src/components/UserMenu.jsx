@@ -82,10 +82,14 @@ export default function UserMenu({ onLogoutSuccess }) {
         onCancel={() => setShowLogoutModal(false)}
       />
 
-      <div className="relative" ref={containerRef}>
+      <div className="relative min-w-0" ref={containerRef}>
         <button
+          type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="flex items-center gap-3 rounded-2xl border border-slate-700 bg-slate-800/90 px-3 py-2 text-left shadow-sm transition hover:bg-slate-700"
+          className="flex max-w-full items-center gap-3 rounded-2xl border border-slate-700 bg-slate-800/90 px-3 py-2 text-left shadow-sm transition hover:bg-slate-700"
+          aria-haspopup="menu"
+          aria-expanded={open}
+          aria-label={open ? "Cerrar menú de usuario" : "Abrir menú de usuario"}
         >
           <UserAvatar
             src={user.avatar}
@@ -95,24 +99,31 @@ export default function UserMenu({ onLogoutSuccess }) {
           />
 
           <div className="hidden min-w-0 sm:block">
-            <p className="truncate text-sm font-semibold text-white">{user.name}</p>
-            <p className="truncate text-xs text-slate-400">{user.role}</p>
+            <p className="truncate text-sm font-semibold text-white">
+              {user.name}
+            </p>
+
+            <p className="truncate text-xs text-slate-400">
+              {user.role}
+            </p>
           </div>
 
           <div
-            className={`hidden text-slate-400 transition-transform sm:block ${
+            className={`hidden shrink-0 text-slate-400 transition-transform sm:block ${
               open ? "rotate-180" : ""
             }`}
+            aria-hidden="true"
           >
             ▾
           </div>
         </button>
 
         <div
-          className={`absolute right-0 z-[110] mt-3 w-80 origin-top-right overflow-hidden rounded-3xl border border-slate-800 bg-slate-900 shadow-2xl transition-all duration-200 ${
+          role="menu"
+          className={`absolute right-0 top-full z-[110] mt-3 w-[calc(100vw-2rem)] max-w-80 origin-top-right overflow-hidden rounded-3xl border border-slate-800 bg-slate-900 shadow-2xl transition-all duration-200 ${
             open
-              ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
-              : "pointer-events-none -translate-y-2 scale-95 opacity-0"
+              ? "visible pointer-events-auto translate-y-0 scale-100 opacity-100"
+              : "invisible pointer-events-none -translate-y-2 scale-95 opacity-0"
           }`}
         >
           <div className="border-b border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-5">

@@ -94,7 +94,7 @@ export default function CreateReportPage({ onReportCreated, onActionError }) {
       <section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
         <form
           onSubmit={handleSubmit}
-          className="space-y-6 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-sm"
+          className="w-full min-w-0 max-w-full space-y-6 overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm sm:p-6"
         >
           <div>
             <p className="text-sm text-slate-400">Información general</p>
@@ -103,8 +103,8 @@ export default function CreateReportPage({ onReportCreated, onActionError }) {
             </h3>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2 md:col-span-2">
+          <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="min-w-0 space-y-2 md:col-span-2">
               <label className="text-sm text-slate-300">Título</label>
               <input
                 type="text"
@@ -117,7 +117,7 @@ export default function CreateReportPage({ onReportCreated, onActionError }) {
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="min-w-0 space-y-2">
               <label className="text-sm text-slate-300">Área</label>
               <input
                 type="text"
@@ -129,7 +129,7 @@ export default function CreateReportPage({ onReportCreated, onActionError }) {
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="min-w-0 space-y-2">
               <label className="text-sm text-slate-300">Fuente</label>
               <input
                 type="text"
@@ -141,29 +141,33 @@ export default function CreateReportPage({ onReportCreated, onActionError }) {
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm text-slate-300">Fecha del incidente</label>
-              <div className="relative">
+            <div className="min-w-0 space-y-2">
+              <label className="text-sm text-slate-300">
+                Fecha del incidente
+              </label>
+
+              <div className="relative min-w-0 max-w-full overflow-hidden">
                 <input
                   type="datetime-local"
                   name="incident_date"
                   value={formData.incident_date}
                   onChange={handleChange}
-                  className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-slate-100 outline-none focus:border-slate-500"
+                  className="block w-full min-w-0 max-w-full appearance-none rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-base text-slate-100 outline-none focus:border-slate-500"
                 />
+
                 <CalendarDays className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
               </div>
             </div>
           </div>
 
-          <div className="pt-2">
+          <div className="min-w-0 pt-2">
             <p className="text-sm text-slate-400">Narrativa del incidente</p>
             <h3 className="mt-1 text-xl font-semibold text-white">
               Descripción detallada
             </h3>
           </div>
 
-          <div className="space-y-2">
+          <div className="min-w-0 space-y-2">
             <label className="text-sm text-slate-300">Descripción narrativa</label>
             <textarea
               name="description"
@@ -187,7 +191,7 @@ export default function CreateReportPage({ onReportCreated, onActionError }) {
               type="button"
               onClick={handleReset}
               disabled={submitting}
-              className="rounded-2xl border border-slate-700 bg-slate-950 px-5 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-5 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
               Limpiar formulario
             </button>
@@ -195,7 +199,7 @@ export default function CreateReportPage({ onReportCreated, onActionError }) {
             <button
               type="submit"
               disabled={submitting}
-              className="rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
               {submitting ? "Guardando reporte..." : "Guardar reporte"}
             </button>

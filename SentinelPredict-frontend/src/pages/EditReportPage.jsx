@@ -99,7 +99,7 @@ export default function EditReportPage({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="w-full min-w-0 max-w-full space-y-6">
       <section>
         <h2 className="text-3xl font-semibold text-white">Editar reporte</h2>
         <p className="mt-2 text-slate-400">
@@ -109,10 +109,10 @@ export default function EditReportPage({
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 rounded-2xl border border-slate-800 bg-slate-900 p-6"
+        className="w-full min-w-0 max-w-full space-y-6 overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 p-5 sm:p-6"
       >
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="space-y-2">
+        <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="min-w-0 space-y-2">
             <label className="text-sm text-slate-300">Título</label>
             <input
               type="text"
@@ -124,7 +124,7 @@ export default function EditReportPage({
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="min-w-0 space-y-2">
             <label className="text-sm text-slate-300">Área</label>
             <input
               type="text"
@@ -135,7 +135,7 @@ export default function EditReportPage({
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="min-w-0 space-y-2">
             <label className="text-sm text-slate-300">Fuente</label>
             <input
               type="text"
@@ -146,22 +146,26 @@ export default function EditReportPage({
             />
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm text-slate-300">Fecha del incidente</label>
-            <div className="relative">
+          <div className="min-w-0 space-y-2">
+            <label className="text-sm text-slate-300">
+              Fecha del incidente
+            </label>
+
+            <div className="relative min-w-0 max-w-full overflow-hidden">
               <input
                 type="datetime-local"
                 name="incident_date"
                 value={formData.incident_date}
                 onChange={handleChange}
-                className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-slate-100 outline-none focus:border-slate-500"
+                className="block w-full min-w-0 max-w-full appearance-none rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-base text-slate-100 outline-none focus:border-slate-500"
               />
+
               <CalendarDays className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
             </div>
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="min-w-0 space-y-2">
           <label className="text-sm text-slate-300">Descripción narrativa</label>
           <textarea
             name="description"
@@ -183,7 +187,7 @@ export default function EditReportPage({
           <button
             type="submit"
             disabled={submitting}
-            className="rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             {submitting ? "Guardando cambios..." : "Guardar cambios"}
           </button>

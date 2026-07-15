@@ -48,23 +48,28 @@ export default function Logo({
       <img
         src="/branding/logo-horizontal.png"
         alt="SentinelPredict"
-        className={`h-12 w-auto shrink-0 object-contain ${className}`}
+        className={`h-12 w-auto max-w-full shrink-0 object-contain ${className}`}
         draggable={false}
       />
     );
   }
 
   return (
-    <div className={`flex items-center ${selected.gap} ${className}`}>
+    <div
+      className={`flex min-w-0 max-w-full items-center ${selected.gap} ${className}`}
+    >
       <img
         src="/branding/logo-icon.png"
-        alt="SentinelPredict"
+        alt=""
+        aria-hidden="true"
         className={`shrink-0 object-contain ${selected.icon}`}
         draggable={false}
       />
 
-      <div className="leading-none">
-        <p className={`font-semibold tracking-tight text-white ${selected.text}`}>
+      <div className="min-w-0 leading-none">
+        <p
+          className={`truncate font-semibold tracking-tight text-white ${selected.text}`}
+        >
           SentinelPredict
         </p>
       </div>

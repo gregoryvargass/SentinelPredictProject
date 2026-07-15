@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link,NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Moon, Sun } from "lucide-react";
 import UserMenu from "../components/UserMenu";
 import Logo from "../components/Logo";
@@ -67,22 +67,29 @@ export default function MainLayout({ children, onLogoutSuccess }) {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <header
-        className={`sticky top-0 z-50 border-b border-slate-800 bg-slate-900/95 backdrop-blur transition-transform duration-300 ${
+        className={`sticky top-0 z-50 w-full max-w-full border-b border-slate-800 bg-slate-900/95 backdrop-blur transition-transform duration-300 ${
           showHeader ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
-          <div className="flex items-center justify-between gap-4">
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-3">
-                <Logo variant="brand" size="md" />
-                <div className="min-w-0">
-                  <p className="truncate text-sm text-slate-400">
-                    Gestión y análisis de incidentes industriales
-                  </p>
-                </div>
+        <div className="mx-auto w-full max-w-7xl px-4 py-3 sm:px-6 sm:py-4">
+          <div className="flex min-w-0 items-center justify-between gap-3">
+            <Link
+              to="/app"
+              aria-label="Ir al dashboard de SentinelPredict"
+              className="flex min-w-0 flex-1 items-center gap-3"
+            >
+              <Logo variant="icon" size="md" />
+
+              <div className="min-w-0">
+                <p className="truncate text-lg font-semibold tracking-tight text-white sm:text-xl">
+                  SentinelPredict
+                </p>
+
+                <p className="hidden truncate text-xs text-slate-400 sm:block lg:text-sm">
+                  Gestión y análisis de incidentes industriales
+                </p>
               </div>
-            </div>
+            </Link>
 
             <div className="hidden xl:flex xl:items-center xl:gap-3">
               <nav className="flex items-center gap-2">
@@ -140,7 +147,7 @@ export default function MainLayout({ children, onLogoutSuccess }) {
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-700 bg-slate-800 text-slate-100 transition hover:bg-slate-700 xl:hidden"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-700 bg-slate-800 text-slate-100 transition hover:bg-slate-700 xl:hidden"
               aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={mobileMenuOpen}
             >
@@ -242,7 +249,9 @@ export default function MainLayout({ children, onLogoutSuccess }) {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">{children}</main>
+      <main className="mx-auto w-full min-w-0 max-w-7xl overflow-x-hidden px-4 py-8 pb-[calc(7rem+env(safe-area-inset-bottom))] sm:px-6 sm:pb-10">
+        {children}
+      </main>
     </div>
   );
 }

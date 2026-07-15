@@ -321,19 +321,19 @@ export default function ReportsPage({
           </h3>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <div className="space-y-2">
+        <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="min-w-0 space-y-2">
             <label className="text-sm text-slate-300">Buscar</label>
             <input
               type="text"
               value={searchTerm}
               onChange={(event) => updateFilter("searchTerm", event.target.value)}
               placeholder="Título, descripción, área..."
-              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
+              className="block min-w-0 max-w-full w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none focus:border-slate-500"
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="min-w-0 space-y-2">
             <label className="text-sm text-slate-300">Filtrar por estado</label>
             <select
               value={statusFilter}
@@ -347,7 +347,7 @@ export default function ReportsPage({
             </select>
           </div>
 
-          <div className="space-y-2">
+          <div className="min-w-0 space-y-2">
             <label className="text-sm text-slate-300">Filtrar por área</label>
             <select
               value={areaFilter}
@@ -363,7 +363,7 @@ export default function ReportsPage({
             </select>
           </div>
 
-          <div className="space-y-2">
+          <div className="min-w-0 space-y-2">
             <label className="text-sm text-slate-300">
               Filtrar por clasificación
             </label>
@@ -384,41 +384,46 @@ export default function ReportsPage({
           </div>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_0.9fr]">
-                  <div className="space-y-2">
-          <label className="text-sm text-slate-300">Fecha desde</label>
-          <div className="relative">
-            <input
-              type="date"
-              value={startDateFilter}
-              onChange={(event) =>
-                updateFilter("startDateFilter", event.target.value)
-              }
-              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-slate-100 outline-none focus:border-slate-500"
-            />
-            <CalendarDays className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
-          </div>
-        </div>
+        <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-[1fr_1fr_0.9fr]">
+          <div className="min-w-0 space-y-2">
+            <label className="text-sm text-slate-300">Fecha desde</label>
 
-         <div className="space-y-2">
+            <div className="relative min-w-0 max-w-full overflow-hidden">
+              <input
+                type="date"
+                value={startDateFilter}
+                onChange={(event) =>
+                  updateFilter("startDateFilter", event.target.value)
+                }
+                className="block w-full min-w-0 max-w-full appearance-none rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-base text-slate-100 outline-none focus:border-slate-500"
+              />
+
+              <CalendarDays className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
+            </div>
+          </div>
+
+          <div className="min-w-0 space-y-2">
             <label className="text-sm text-slate-300">Fecha hasta</label>
-            <div className="relative">
+
+            <div className="relative min-w-0 max-w-full overflow-hidden">
               <input
                 type="date"
                 value={endDateFilter}
                 onChange={(event) =>
                   updateFilter("endDateFilter", event.target.value)
                 }
-                className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-slate-100 outline-none focus:border-slate-500"
+                className="block w-full min-w-0 max-w-full appearance-none rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 pr-12 text-base text-slate-100 outline-none focus:border-slate-500"
               />
+
               <CalendarDays className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-300" />
             </div>
           </div>
 
-          <div className="flex items-end">
+          <div className="flex min-w-0 items-end md:col-span-2 xl:col-span-1">
             <button
+              type="button"
               onClick={clearFilters}
-              className="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm font-semibold text-slate-200 hover:bg-slate-800"
+              className="w-full min-w-0 max-w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm font-semibold text-slate-200 hover:bg-slate-800"
             >
               Limpiar filtros
             </button>
